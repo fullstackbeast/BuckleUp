@@ -2,7 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuckleUp.Domain.Repository;
+using BuckleUp.Domain.Service;
+using BuckleUp.Interface.Repository;
+using BuckleUp.Interface.Service;
 using BuckleUp.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,9 +31,22 @@ namespace BuckleUp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-             services.AddDbContext<AppDBContext> (options => options.UseMySQL(
-                Configuration.GetConnectionString("AppDBContextConnection")
-            ));
+            services.AddDbContext<AppDBContext>(options => options.UseMySQL(
+              Configuration.GetConnectionString("AppDBContextConnection")
+          ));
+
+           services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(config=>{
+                config.LoginPath="/Auth/Login";
+                config.Cookie.Name = "BuckleUp";
+            });
+            services.AddHttpContextAccessor();
+
+
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,8 +66,11 @@ namespace BuckleUp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCookiePolicy();
+            //app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

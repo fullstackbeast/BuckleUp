@@ -58,3 +58,8 @@ C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\BuckleUp.dll
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\ref\BuckleUp.dll
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\BuckleUp.pdb
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\BuckleUp.genruntimeconfig.cache
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\Index.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\Create.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Auth\Login.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Test\ForTeacher.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Test\ForStudent.cshtml.g.cs

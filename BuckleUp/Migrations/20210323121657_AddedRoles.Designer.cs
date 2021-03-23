@@ -3,14 +3,16 @@ using System;
 using BuckleUp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BuckleUp.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210323121657_AddedRoles")]
+    partial class AddedRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,26 +138,6 @@ namespace BuckleUp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
-                });
-
-            modelBuilder.Entity("BuckleUp.Models.Entities.User", b =>
-                {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BuckleUp.Models.StudentAssessment", b =>

@@ -3,14 +3,16 @@ using System;
 using BuckleUp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BuckleUp.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210323134631_AddedUsers")]
+    partial class AddedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,9 +150,6 @@ namespace BuckleUp.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

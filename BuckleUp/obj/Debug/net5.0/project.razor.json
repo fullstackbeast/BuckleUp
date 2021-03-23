@@ -15618,8 +15618,33 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\Index.cshtml",
+      "TargetPath": "Views\\Teacher\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Auth\\Login.cshtml",
+      "TargetPath": "Views\\Auth\\Login.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Test\\ForTeacher.cshtml",
+      "TargetPath": "Views\\Test\\ForTeacher.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\Create.cshtml",
+      "TargetPath": "Views\\Teacher\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Test\\ForStudent.cshtml",
+      "TargetPath": "Views\\Test\\ForStudent.cshtml",
       "FileKind": "mvc"
     },
     {

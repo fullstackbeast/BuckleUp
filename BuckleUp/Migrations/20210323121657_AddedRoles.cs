@@ -1,12 +1,26 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace BuckleUp.Migrations
 {
-    public partial class Initial : Migration
+    public partial class AddedRoles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
@@ -17,6 +31,7 @@ namespace BuckleUp.Migrations
                     MiddleName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
+                    Role = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -33,7 +48,8 @@ namespace BuckleUp.Migrations
                     LastName = table.Column<string>(nullable: true),
                     MiddleName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: true),
+                    Role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,6 +207,9 @@ namespace BuckleUp.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Roles");
+
             migrationBuilder.DropTable(
                 name: "StudentAssessment");
 

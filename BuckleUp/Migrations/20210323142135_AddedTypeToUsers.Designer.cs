@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuckleUp.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20210322182122_Initial")]
-    partial class Initial
+    [Migration("20210323142135_AddedTypeToUsers")]
+    partial class AddedTypeToUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,20 @@ namespace BuckleUp.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("BuckleUp.Models.Entities.Role", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("BuckleUp.Models.Entities.Student", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -87,6 +101,9 @@ namespace BuckleUp.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -115,9 +132,32 @@ namespace BuckleUp.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.Entities.User", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BuckleUp.Models.StudentAssessment", b =>
