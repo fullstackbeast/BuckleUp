@@ -8,12 +8,11 @@ namespace BuckleUp.Models.Entities
         public Teacher()
         {
             Courses = new List<Course>();
-          
             Assessments = new List<Assessment>();
             TeacherStudents = new List<TeacherStudent>();
         }
-        public IEnumerable<Course> Courses { get; set; }
-        public IEnumerable<TeacherStudent> TeacherStudents { get; set; }
-        public IEnumerable<Assessment> Assessments { get; set; }
+        public ICollection<Course> Courses { get; set; }
+        public ICollection<TeacherStudent> TeacherStudents { get; set; }
+        public ICollection<Assessment> Assessments { get; set; }
     }
 }

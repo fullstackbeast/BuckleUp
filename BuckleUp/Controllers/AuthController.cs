@@ -16,9 +16,11 @@ namespace BuckleUp.Controllers
     {
         private readonly IAuthRepository _authRepository;
         private readonly ITeacherService _teacherService;
+        private readonly IStudentService _studentService;
 
-        public AuthController(IAuthRepository authRepository, ITeacherService teacherService)
+        public AuthController(IAuthRepository authRepository, ITeacherService teacherService, IStudentService studentService)
         {
+            _studentService = studentService;
             _teacherService = teacherService;
 
             _authRepository = authRepository;
@@ -31,7 +33,7 @@ namespace BuckleUp.Controllers
         }
 
         [HttpPost]
-        public  async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(string email, string password)
         {
 
 
@@ -44,15 +46,9 @@ namespace BuckleUp.Controllers
 
                 switch (user.Type)
                 {
-                    case ("Teacher"):
-                        loggingInUser = _teacherService.FindById(user.Id);
-                        break;
-                    case ("Student"):
-                        loggingInUser = _teacherService.FindById(user.Id);
-                        break;
-                    default:
-                    loggingInUser = null;
-                        break;
+                    case ("Teacher"): loggingInUser = _teacherService.FindById(user.Id); break;
+                    case ("Student"): loggingInUser = _studentService.FindById(user.Id); break;
+                    default: loggingInUser = null; break;
                 }
 
                 var claims = new List<Claim>{
@@ -68,14 +64,21 @@ namespace BuckleUp.Controllers
 
                 ViewBag.Message = $"Logged in as {loggingInUser.FirstName} {loggingInUser.LastName}";
 
-
+                return RedirectToAction(actionName: "Dashboard", controllerName: user.Type);
             }
             else
             {
                 ViewBag.Message = $"Id is not found o";
+                return View();
             }
 
-            return View();
+
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

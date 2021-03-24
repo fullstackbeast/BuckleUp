@@ -28,6 +28,7 @@ namespace BuckleUp.Models
             .WithMany(Std => Std.TeacherStudents)
             .HasForeignKey(Ts => Ts.StudentId);
 
+
             // Configuring Many to many relationship between Student and Course
             modelBuilder.Entity<StudentCourse>()
             .HasKey(Sc => new {Sc.StudentId, Sc.CourseId});

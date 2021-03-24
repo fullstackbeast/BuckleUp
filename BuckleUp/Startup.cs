@@ -45,6 +45,12 @@ namespace BuckleUp
 
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<ITeacherService, TeacherService>();
+
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IStudentService, StudentService>();
+            
+            services.AddScoped<ICourseRepository, CourseRepository>();
+
             services.AddScoped<IAuthRepository, AuthRepository>();
 
         }

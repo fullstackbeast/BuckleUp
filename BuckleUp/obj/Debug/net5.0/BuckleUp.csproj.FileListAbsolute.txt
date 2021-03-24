@@ -63,3 +63,9 @@ C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\Create
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Auth\Login.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Test\ForTeacher.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Test\ForStudent.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\DashBoard.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Create.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\DashBoard.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Index.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\AddStudent.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\AddCourse.cshtml.g.cs

@@ -1,0 +1,37 @@
+@model BuckleUp.Models.Entities.Teacher
+
+<h1>Teacher DashBoard</h1>
+
+<a asp-controller="Auth" asp-action="Logout">Logout</a>
+
+<h3>Logged in as @Model.FirstName  @Model.LastName</h3>
+
+<br/>
+
+@if(Model.TeacherStudents.Count() == 0){
+    <h4>You do not have any student</h4>
+}
+
+else{
+    <h1>Students</h1>
+    @foreach(var item in Model.TeacherStudents){
+        <h3> @item.Student.FirstName @item.Student.LastName</h3>
+    }
+}
+
+<a class="btn btn-primary" asp-action="AddStudent"> Add Student</a>
+
+
+<br/>
+@if(Model.Courses.Count() == 0){
+    <h4>You do not have any course</h4>
+}
+
+else{
+    <h1>Courses</h1>
+    @foreach(var item in Model.Courses){
+        <h3> @item.Title</h3>
+    }
+}
+
+<a class="btn btn-primary" asp-action="AddCourse"> Add Course</a>

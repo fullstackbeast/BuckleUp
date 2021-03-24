@@ -15613,6 +15613,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\AddStudent.cshtml",
+      "TargetPath": "Views\\Teacher\\AddStudent.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
@@ -15628,8 +15633,23 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\DashBoard.cshtml",
+      "TargetPath": "Views\\Student\\DashBoard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Auth\\Login.cshtml",
       "TargetPath": "Views\\Auth\\Login.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Index.cshtml",
+      "TargetPath": "Views\\Student\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\DashBoard.cshtml",
+      "TargetPath": "Views\\Teacher\\DashBoard.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15643,6 +15663,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Create.cshtml",
+      "TargetPath": "Views\\Student\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Test\\ForStudent.cshtml",
       "TargetPath": "Views\\Test\\ForStudent.cshtml",
       "FileKind": "mvc"
@@ -15650,6 +15675,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\AddCourse.cshtml",
+      "TargetPath": "Views\\Teacher\\AddCourse.cshtml",
       "FileKind": "mvc"
     },
     {
