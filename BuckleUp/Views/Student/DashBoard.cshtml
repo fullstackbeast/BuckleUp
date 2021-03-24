@@ -7,17 +7,37 @@
 <h3>Logged in as @Model.FirstName  @Model.LastName</h3>
 
 
+<br/>
 
 @if(Model.TeacherStudents.Count() == 0){
     <h4>You do not have any teacher</h4>
 }
 
 else{
-    <h3>Teachers</h3>
+    <h3>TEACHERS</h3>
     @foreach(var item in Model.TeacherStudents){
         <h3> @item.Teacher.FirstName  @item.Teacher.LastName </h3>
     }
 }
 
-@* <a class="btn btn-primary" asp-action="AddStudents"> Add Students </a> *@
+<br/>
+
+@if(Model.StudentCourses.Count() == 0  && Model.TeacherStudents.Count() == 0){
+     <h4>You do not have any course</h4>
+     <h5>Get enrolled under a teacher to add a course</h5>
+}
+else if(Model.StudentCourses.Count() == 0  && Model.TeacherStudents.Count() != 0){
+     <h4>You do not have any course</h4>
+     <a asp-action = "Enroll"><button class="btn btn-primary">Enroll</button></a>
+}
+else if(Model.StudentCourses.Count() != 0){
+    <h3>COURSES</h3>
+     @foreach(var item in Model.StudentCourses ){
+        <h3> @item.Course.Title</h3> 
+    }
+
+     <a asp-action = "Enroll"><button class="btn btn-primary">Enroll</button></a>
+}
+
+
 

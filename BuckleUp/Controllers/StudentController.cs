@@ -1,19 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models.Entities;
+using BuckleUp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BuckleUp.Controllers
 {
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
+        private readonly ITeacherService _teacherService;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentService studentService, ITeacherService teacherService)
         {
+            _teacherService = teacherService;
             _studentService = studentService;
         }
 
@@ -41,9 +46,76 @@ namespace BuckleUp.Controllers
 
             Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            Student student = _studentService.GetStudentWithTeachers(studentId);
+            Student student = _studentService.GetStudentWithTeacherCoursesById(studentId);
             return View(student);
         }
+
+
+        [Authorize(Roles = "Student")]
+        public IActionResult Enroll()
+        {
+            Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            Student student = _studentService.GetStudentWithTeacherCoursesById(studentId);
+
+
+            List<SelectListItem> teacherSelect = new List<SelectListItem>();
+
+            foreach (var teacher in student.TeacherStudents)
+            {
+                teacherSelect.Add(new SelectListItem
+                {
+                    Text = $"{teacher.Teacher.FirstName} {teacher.Teacher.LastName}",
+                    Value = $"{teacher.Teacher.Id}"
+                });
+            }
+
+            EnrollVM enrollVM = new EnrollVM
+            {
+                TeacherSelectList = teacherSelect
+            };
+
+
+            return View(enrollVM);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Student")]
+        public IActionResult Enroll(Guid? teacherId, Guid? courseId)
+        {
+            Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            Student student = _studentService.GetStudentWithTeacherCoursesById(studentId);
+
+            Teacher selectedTeacher = _teacherService.GetTeacherWithCourses(teacherId.Value);
+
+            List<Course> teacherCourses = selectedTeacher.Courses.ToList();
+
+            List<SelectListItem> teacherSelect = new List<SelectListItem>();
+
+            foreach (var teacher in student.TeacherStudents)
+            {
+                teacherSelect.Add(new SelectListItem
+                {
+                    Text = $"{teacher.Teacher.FirstName} {teacher.Teacher.LastName}",
+                    Value = $"{teacher.Teacher.Id}",
+                    Selected = teacherId.Value.Equals(teacher.Teacher.Id)
+                });
+            }
+
+            EnrollVM enrollVM = new EnrollVM
+            {
+                TeacherSelectList = teacherSelect,
+                TeacherCourses = teacherCourses
+            };
+
+            ViewBag.TeacherId = teacherId.Value;
+            if(courseId != null) _studentService.Enroll(studentId, courseId.Value);
+        
+
+            return View(enrollVM);
+        }
+
 
     }
 }

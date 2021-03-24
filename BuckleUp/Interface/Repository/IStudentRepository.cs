@@ -7,9 +7,12 @@ namespace BuckleUp.Interface.Repository
     public interface IStudentRepository
     {
         public Student Add(Student student);
+        public Student Update(Student student);
         public Student FindById(Guid id);
         public Student FindByEmail(string email);
         public Student FindStudentWithTeachersById(Guid id);
+        public Student FindStudentWithCoursesById(Guid id);
+         public Student FindStudentWithTeacherCoursesById(Guid id);
         public List<Student> ListAll();
     }
 }

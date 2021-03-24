@@ -15653,6 +15653,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Enroll.cshtml",
+      "TargetPath": "Views\\Student\\Enroll.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Test\\ForTeacher.cshtml",
       "TargetPath": "Views\\Test\\ForTeacher.cshtml",
       "FileKind": "mvc"

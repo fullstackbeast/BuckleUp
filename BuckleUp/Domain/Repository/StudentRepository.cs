@@ -46,10 +46,34 @@ namespace BuckleUp.Domain.Repository
             .Include(stud => stud.TeacherStudents)
             .ThenInclude(tchstd => tchstd.Teacher).FirstOrDefault(tch=> tch.Id == id);
         }
+        public Student FindStudentWithTeacherCoursesById(Guid id)
+        {
+            return _context.Students
+            .Include(stud => stud.TeacherStudents)
+            .ThenInclude(tchstd => tchstd.Teacher)
+            .ThenInclude(tch => tch.Courses)
+            .Include(stud => stud.StudentCourses)
+            .ThenInclude(stdcou => stdcou.Course)
+            .FirstOrDefault(tch=> tch.Id == id);
+        }
 
         public List<Student> ListAll()
         {
             return _context.Students.ToList();
+        }
+
+        public Student FindStudentWithCoursesById(Guid id)
+        {
+             return _context.Students
+            .Include(stud => stud.StudentCourses)
+            .ThenInclude(stdcou => stdcou.Course).FirstOrDefault(tch=> tch.Id == id);
+        }
+
+        public Student Update(Student student)
+        {
+            _context.Students.Update(student);
+            _context.SaveChanges();
+            return student;
         }
     }
 }

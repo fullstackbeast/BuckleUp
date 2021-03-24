@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
+using BuckleUp.Models;
 using BuckleUp.Models.Entities;
 
 namespace BuckleUp.Domain.Service
@@ -23,6 +24,23 @@ namespace BuckleUp.Domain.Service
             return _studentRepository.Add(student);
         }
 
+        public Student Enroll(Guid id, Guid courseId)
+        {
+            Student student = _studentRepository.FindStudentWithCoursesById(id);
+            StudentCourse studentCourse = new StudentCourse{
+                StudentId = id,
+                CourseId = courseId
+            };
+
+            student.StudentCourses.Add(studentCourse);
+
+            _studentRepository.Update(student);
+
+            return student;
+
+
+        }
+
         public Student FindByEmail(string email)
         {
             return _studentRepository.FindByEmail(email);
@@ -31,6 +49,11 @@ namespace BuckleUp.Domain.Service
         public Student FindById(Guid id)
         {
             return _studentRepository.FindById(id);
+        }
+
+        public Student GetStudentWithTeacherCoursesById(Guid id)
+        {
+            return _studentRepository.FindStudentWithTeacherCoursesById(id);
         }
 
         public Student GetStudentWithTeachers(Guid id)

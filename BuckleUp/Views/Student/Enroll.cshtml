@@ -1,0 +1,49 @@
+@model BuckleUp.Models.ViewModels.EnrollVM
+
+<h1>Enrolling ......</h1>
+
+<h3>@ViewBag.CourseName</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Enroll" method="POST">
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label">Select Teacher</label>
+                <select asp-for="TeacherId" asp-items="@Model.TeacherSelectList" class="form-control">
+                    <option disabled selected>--Select Teacher--</option>
+                </select>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Get Courses" class="btn btn-primary" />
+            </div>
+
+        </form>
+
+      
+
+    </div>
+
+    <div class="col-sm-12">
+        @if(Model.TeacherCourses != null && Model.TeacherCourses.Count() != 0){
+            @foreach(var course in Model.TeacherCourses){
+                <form asp-action="Enroll" method="POST">
+                    <input asp-for="TeacherId" class="form-control" value=@ViewBag.TeacherId hidden/>
+                    <div class="form-group">
+                        <label asp-for="CourseId" class="control-label">@course.Title</label>
+                        <input asp-for="CourseId" class="form-control" value=@course.Id hidden/>
+                        <span asp-validation-for="CourseId" class="text-danger"></span>
+                    </div>
+                        <div class="form-group">
+                        <input type="submit" value="Enroll" class="btn btn-success" />
+                    </div>
+                </form>              
+            }
+        }
+
+        else if(Model.TeacherCourses != null && Model.TeacherCourses.Count() == 0){
+            <h1>This Teacher Is Not Offering Any Course</h1>
+        }
+    </div>
+</div>

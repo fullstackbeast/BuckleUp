@@ -11,9 +11,9 @@ namespace BuckleUp.Models.Entities
             StudentCourses = new List<StudentCourse>();
         }
 
-        public IEnumerable<TeacherStudent> TeacherStudents {get; set;}
-        public IEnumerable<StudentCourse> StudentCourses {get; set;}
-        public IEnumerable<StudentAssessment> StudentAssessments {get; set;}
+        public ICollection<TeacherStudent> TeacherStudents {get; set;}
+        public ICollection<StudentCourse> StudentCourses {get; set;}
+        public ICollection<StudentAssessment> StudentAssessments {get; set;}
         public DateTime DateOfBirth {get; set;}
     }
 }
