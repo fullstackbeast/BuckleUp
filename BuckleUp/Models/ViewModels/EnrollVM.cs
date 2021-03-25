@@ -10,6 +10,8 @@ namespace BuckleUp.Models.ViewModels
 
         public Guid TeacherId {get; set;}
         public Guid CourseId {get; set;}
+
+        public Student Student {get; set;}
         public IEnumerable<SelectListItem> TeacherSelectList { get; set;}
 
         public ICollection<Course> TeacherCourses { get; set;}

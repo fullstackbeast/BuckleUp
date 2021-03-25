@@ -13,7 +13,7 @@ namespace BuckleUp.Models.Entities
         public string Title { get; set; }
         public Teacher Teacher { get; set; }
         public Guid TeacherId {get; set;}
-        public IEnumerable<StudentCourse> StudentCourses{get; set;}
+        public ICollection<StudentCourse> StudentCourses{get; set;}
 
 
 

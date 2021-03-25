@@ -33,5 +33,13 @@ namespace BuckleUp.Domain.Repository
         {
             return _context.Courses.Find(id);
         }
+
+        public Course FindCourseDetailsWithAllStudents(Guid courseId)
+        {
+           return  _context.Courses
+            .Include(cou => cou.Teacher)
+            .Include(cou => cou.StudentCourses)
+            .ThenInclude(stdcou => stdcou.Student).FirstOrDefault(cou => cou.Id == courseId);
+        }
     }
 }

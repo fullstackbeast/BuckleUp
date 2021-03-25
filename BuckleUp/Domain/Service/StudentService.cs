@@ -38,7 +38,16 @@ namespace BuckleUp.Domain.Service
 
             return student;
 
+        }
+        public Student UnEnroll(Guid id, StudentCourse studentCourse)
+        {
+            Student student = _studentRepository.FindStudentWithCoursesById(id);
 
+            student.StudentCourses.Remove(studentCourse);
+
+            _studentRepository.Update(student);
+
+            return student;
         }
 
         public Student FindByEmail(string email)
@@ -64,6 +73,11 @@ namespace BuckleUp.Domain.Service
         public List<Student> ListAll()
         {
             return _studentRepository.ListAll();
+        }
+
+        public Student UpdateStudent(Student student)
+        {
+            return _studentRepository.Update(student);
         }
     }
 }

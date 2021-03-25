@@ -78,6 +78,47 @@ namespace BuckleUp.Controllers
 
 
         [Authorize(Roles = "Teacher")]
+        public IActionResult RemoveStudent()
+        {
+
+            RemoveStudentVM removeStudentVm = new RemoveStudentVM();
+
+             Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            Teacher teacher = _teacherService.GetTeacherWithStudentsAndCourses(teacherId);
+
+
+            removeStudentVm.Teacher = teacher;
+
+            
+
+            return View(removeStudentVm);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult RemoveStudent(Guid studentId)
+        {
+
+            Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            Student student = _studentService.GetStudentWithTeacherCoursesById(studentId);
+
+            if (student == null)
+            {
+                ViewBag.Message = "Student does not exist";
+                return View();
+            }
+
+            else
+            {
+                _teacherService.RemoveStudent(teacherId, student);
+                return RedirectToAction(nameof(Dashboard));
+            }
+        }
+
+
+        [Authorize(Roles = "Teacher")]
         public IActionResult AddCourse()
         {
             return View();
@@ -91,6 +132,21 @@ namespace BuckleUp.Controllers
             Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             _teacherService.AddCourse(teacherId, addCourseVM.Title);
+            return RedirectToAction(nameof(Dashboard));
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult DeleteCourse(Guid courseId, Guid teacherId)
+        {
+            Guid loggedInTeacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            if (loggedInTeacherId.Equals(teacherId))
+            {
+                _teacherService.DeleteCourse(courseId, teacherId);
+            }
+
             return RedirectToAction(nameof(Dashboard));
 
         }

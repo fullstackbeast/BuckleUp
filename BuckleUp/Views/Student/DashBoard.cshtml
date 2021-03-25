@@ -33,7 +33,9 @@ else if(Model.StudentCourses.Count() == 0  && Model.TeacherStudents.Count() != 0
 else if(Model.StudentCourses.Count() != 0){
     <h3>COURSES</h3>
      @foreach(var item in Model.StudentCourses ){
-        <h3> @item.Course.Title</h3> 
+         <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Course.Id">
+            <h3> @item.Course.Title</h3>
+        </a>
     }
 
      <a asp-action = "Enroll"><button class="btn btn-primary">Enroll</button></a>

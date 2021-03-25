@@ -70,3 +70,5 @@ C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Index.
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\AddStudent.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\AddCourse.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Enroll.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Course\Details.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\RemoveStudent.cshtml.g.cs

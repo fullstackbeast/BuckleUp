@@ -1,13 +1,16 @@
+using System.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using BuckleUp.Interface.Service;
+using BuckleUp.Models;
 using BuckleUp.Models.Entities;
 using BuckleUp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static System.Net.WebRequestMethods;
 
 namespace BuckleUp.Controllers
 {
@@ -81,8 +84,9 @@ namespace BuckleUp.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Student")]
-        public IActionResult Enroll(Guid? teacherId, Guid? courseId)
+        public IActionResult Enroll(Guid? teacherId, Guid? courseId, int? sourceId)
         {
+
             Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             Student student = _studentService.GetStudentWithTeacherCoursesById(studentId);
@@ -106,14 +110,25 @@ namespace BuckleUp.Controllers
             EnrollVM enrollVM = new EnrollVM
             {
                 TeacherSelectList = teacherSelect,
-                TeacherCourses = teacherCourses
+                TeacherCourses = teacherCourses, 
+                Student = student
             };
 
             ViewBag.TeacherId = teacherId.Value;
-            if(courseId != null) _studentService.Enroll(studentId, courseId.Value);
-        
 
+            StudentCourse studentCourse = student.StudentCourses.FirstOrDefault( stdcou => stdcou.CourseId == courseId);
+            
+            if(courseId != null && studentCourse == null) _studentService.Enroll(studentId, courseId.Value);
+            if(courseId != null && studentCourse != null) _studentService.UnEnroll(studentId, studentCourse);
+            if(sourceId != null) {
+                return RedirectToAction(controllerName: "Course",  actionName: "Details", routeValues: new {
+                    Id = courseId
+                });
+            }
+            
             return View(enrollVM);
+
+
         }
 
 

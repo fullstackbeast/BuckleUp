@@ -12,6 +12,7 @@ namespace BuckleUp.Interface.Repository
         public Course FindById(Guid id);
 
         public List<Course> FindAllCoursesByTeacher(Guid teacherID); 
+        public Course FindCourseDetailsWithAllStudents(Guid courseId); 
 
     }
 }

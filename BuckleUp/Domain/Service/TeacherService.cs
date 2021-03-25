@@ -1,9 +1,11 @@
+using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models;
 using BuckleUp.Models.Entities;
+using System.Linq;
 
 namespace BuckleUp.Domain.Service
 {
@@ -82,6 +84,39 @@ namespace BuckleUp.Domain.Service
             _courseRepository.Add(course);
 
             return _teacherRepository.FindById(teacherId);
+        }
+
+        public Teacher DeleteCourse(Guid courseId, Guid teacherId)
+        {
+            Teacher teacher = _teacherRepository.FindById(teacherId);
+            Course course = _courseRepository.FindById(courseId);
+
+            teacher.Courses.Remove(course);
+            _teacherRepository.Update(teacher);
+
+            return teacher;
+            
+        }
+
+        public Teacher RemoveStudent(Guid teacherId, Student student)
+        {
+            Teacher teacher = _teacherRepository.FindTeacherWithStudentsAndCoursesById(teacherId);
+
+            
+            
+            TeacherStudent studentToRemove = teacher.TeacherStudents.FirstOrDefault(tchstd => tchstd.StudentId == student.Id);
+
+            teacher.TeacherStudents.Remove(studentToRemove);
+
+            foreach (var course in teacher.Courses){
+                StudentCourse studentCourse = student.StudentCourses.FirstOrDefault(stdcou => stdcou.CourseId == course.Id);
+                student.StudentCourses.Remove(studentCourse);
+            }
+
+            _studentService.UpdateStudent(student);
+            _teacherRepository.Update(teacher);
+
+            return teacher;
         }
     }
 }

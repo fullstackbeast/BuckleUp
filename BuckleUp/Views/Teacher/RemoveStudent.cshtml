@@ -1,0 +1,22 @@
+@model BuckleUp.Models.ViewModels.RemoveStudentVM
+
+<h1>Removing student</h1>
+
+
+@if(Model.Teacher.TeacherStudents.Count() == 0){
+    <h4>You do not have any student</h4>
+}
+
+else{
+    <h1>Students</h1>
+    @foreach(var item in Model.Teacher.TeacherStudents){
+
+        <form asp-action="RemoveStudent" method="POST">
+            <input asp-for="StudentId" class="form-control" value=@item.Student.Id hidden/>  
+            <h3> @item.Student.FirstName @item.Student.LastName</h3>
+            <div class="form-group">
+                <input type="submit" value="Remove" class="btn btn-danger" />
+            </div>     
+        </form>  
+    }
+}
