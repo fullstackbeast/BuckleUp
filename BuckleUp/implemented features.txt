@@ -1,0 +1,23 @@
+Teacher 
+    Can sign up
+    can sign in
+    can add student
+    can remove student
+    can create course
+    can delete course
+    can add assessment
+    can see course details
+    can see assessment details 
+
+Student 
+    can sign up
+    can sign in 
+    can enroll in a course 
+    can unenroll in a course
+
+
+
+
+Additional consttraints 
+    courses offered by teacher are removed from students records if teacher removes student
+    Newly enrolled students can see all assessments

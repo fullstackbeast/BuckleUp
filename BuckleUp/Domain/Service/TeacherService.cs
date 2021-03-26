@@ -14,9 +14,11 @@ namespace BuckleUp.Domain.Service
         private readonly ITeacherRepository _teacherRepository;
         private readonly IStudentService _studentService;
         private readonly ICourseRepository _courseRepository;
+        private readonly IAssessmentService _assessmentService;
 
-        public TeacherService(ITeacherRepository teacherRepository, IStudentService studentService, ICourseRepository courseRepository)
+        public TeacherService(ITeacherRepository teacherRepository, IStudentService studentService, ICourseRepository courseRepository, IAssessmentService assessmentService)
         {
+            _assessmentService = assessmentService;
             _courseRepository = courseRepository;
             _studentService = studentService;
             _teacherRepository = teacherRepository;
@@ -95,20 +97,21 @@ namespace BuckleUp.Domain.Service
             _teacherRepository.Update(teacher);
 
             return teacher;
-            
+
         }
 
         public Teacher RemoveStudent(Guid teacherId, Student student)
         {
             Teacher teacher = _teacherRepository.FindTeacherWithStudentsAndCoursesById(teacherId);
 
-            
-            
+
+
             TeacherStudent studentToRemove = teacher.TeacherStudents.FirstOrDefault(tchstd => tchstd.StudentId == student.Id);
 
             teacher.TeacherStudents.Remove(studentToRemove);
 
-            foreach (var course in teacher.Courses){
+            foreach (var course in teacher.Courses)
+            {
                 StudentCourse studentCourse = student.StudentCourses.FirstOrDefault(stdcou => stdcou.CourseId == course.Id);
                 student.StudentCourses.Remove(studentCourse);
             }
@@ -116,6 +119,18 @@ namespace BuckleUp.Domain.Service
             _studentService.UpdateStudent(student);
             _teacherRepository.Update(teacher);
 
+            return teacher;
+        }
+
+        public Teacher GetTeacherWithStudentsAndCoursesAndAssessmentsById(Guid id)
+        {
+            return _teacherRepository.FindTeacherWithStudentsAndCoursesAndAssessmentsById(id);
+        }
+
+        public Teacher AddAssessment(Guid teacherId, Assessment assessment)
+        {
+            Teacher teacher = _teacherRepository.FindTeacherWithAssessmentsById(teacherId);
+            _assessmentService.Add(assessment);
             return teacher;
         }
     }

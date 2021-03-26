@@ -7,13 +7,13 @@
 <h3>Logged in as @Model.FirstName  @Model.LastName</h3>
 
 <br/>
-
+  <h1>Students</h1>
 @if(Model.TeacherStudents.Count() == 0){
     <h4>You do not have any student</h4>
 }
 
 else{
-    <h1>Students</h1>
+  
     @foreach(var item in Model.TeacherStudents){
 
         <h3> @item.Student.FirstName @item.Student.LastName</h3>
@@ -28,12 +28,13 @@ else{
 <br/>
 <br/>
 <br/>
+ <h1>Courses</h1>
 @if(Model.Courses.Count() == 0){
     <h4>You do not have any course</h4>
 }
 
 else{
-    <h1>Courses</h1>
+   
     @foreach(var item in Model.Courses){
         <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Id">
             <h3> @item.Title</h3>
@@ -48,3 +49,21 @@ else{
 <br/>
 
 <h1>Assessments</h1>
+
+@if(Model.Assessments.Count() == 0){
+    <h4>You do not have any assessment</h4>
+}
+
+else{
+  
+    @foreach(var item in Model.Assessments){
+        <a asp-controller="Assessment" asp-action="Details" asp-route-id="@item.Id">
+            <h3> @item.Title</h3>
+        </a>
+
+    
+    }
+}
+
+<a class="btn btn-primary" asp-controller="Assessment" asp-action="Create"> Add Assessment</a>
+<a class="btn btn-danger" asp-controller="Assessment" asp-action="Delete"> Remove Assessment</a>

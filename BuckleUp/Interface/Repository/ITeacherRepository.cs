@@ -16,7 +16,9 @@ namespace BuckleUp.Interface.Repository
 
         public Teacher FindTeacherWithStudentsById(Guid id);
         public Teacher FindTeacherWithCoursesById(Guid id);
+        public Teacher FindTeacherWithAssessmentsById(Guid id);
         public Teacher FindTeacherWithStudentsAndCoursesById(Guid id);
+        public Teacher FindTeacherWithStudentsAndCoursesAndAssessmentsById(Guid id);
 
 
         

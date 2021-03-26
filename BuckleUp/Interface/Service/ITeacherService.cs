@@ -14,11 +14,14 @@ namespace BuckleUp.Interface.Service
         public List<Teacher> ListAll();
         public Teacher AddStudent(Guid teacherId, Student student);
         public Teacher RemoveStudent(Guid teacherId, Student student);
+
+        public Teacher AddAssessment(Guid teacherId, Assessment assessment);
         public Teacher AddCourse(Guid teacherId, string title);
         public Teacher DeleteCourse(Guid courseId, Guid teacherId);
         public Teacher GetTeacherWithStudents(Guid id);
         public Teacher GetTeacherWithCourses(Guid id);
         public Teacher GetTeacherWithStudentsAndCourses(Guid id);
+        public Teacher GetTeacherWithStudentsAndCoursesAndAssessmentsById(Guid id);
 
     }
 }

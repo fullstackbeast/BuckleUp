@@ -65,6 +65,7 @@ namespace BuckleUp.Models
         public DbSet<Student> Students {get; set;}
         public DbSet<Course> Courses {get; set;}
         public DbSet<Assessment> Assessments {get; set;}
+        public DbSet<Question> Questions {get; set;}
         public DbSet<Role> Roles {get; set;}
     }
 }

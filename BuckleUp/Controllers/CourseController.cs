@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using BuckleUp.Interface.Service;
@@ -50,12 +51,16 @@ namespace BuckleUp.Controllers
                 ViewBag.Message = $"You are not logged in to view course {id}";
             }
 
-
-
-
-
             return View(courseDetailsVm);
 
+        }
+
+        public IActionResult Enrolled(Guid? id){
+
+            List<Student> students = _studentService.GetAllStudentOfferingACourse(id.Value);
+
+            ViewBag.Students = students;
+            return View();
         }
 
 

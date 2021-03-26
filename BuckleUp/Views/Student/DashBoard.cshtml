@@ -41,5 +41,16 @@ else if(Model.StudentCourses.Count() != 0){
      <a asp-action = "Enroll"><button class="btn btn-primary">Enroll</button></a>
 }
 
+@if(Model.StudentAssessments.Count() == 0){
+    <h4>You do not have any Assessment</h4>
+}
+
+else{
+    <h3>Assessments</h3>
+    @foreach(var item in Model.StudentAssessments){
+        <h3> @item.Assessment.Title</h3>
+    }
+}
+
 
 

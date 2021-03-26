@@ -8,13 +8,17 @@ namespace BuckleUp.Models.Entities
         public Assessment()
         {
             StudentAssessments = new List<StudentAssessment>();
+            Questions = new List<Question>();
         }
-
-        
-        public DateTime StartTime {get; set;}
-        public DateTime StopTime {get; set;}  
-        public Course Course{get; set;}      
-        public Teacher Teacher{get; set;}
-        public IEnumerable<StudentAssessment> StudentAssessments {get; set;}
+        public string Title { get; set; }
+        public string Type { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime StopTime { get; set; }
+        public Course Course { get; set; }
+        public Guid CourseId { get; set; }
+        public Teacher Teacher { get; set; }
+        public Guid TeacherId { get; set; }
+        public ICollection<Question> Questions { get; set; }
+        public ICollection<StudentAssessment> StudentAssessments { get; set; }
     }
 }

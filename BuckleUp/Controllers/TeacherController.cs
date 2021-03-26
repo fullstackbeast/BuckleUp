@@ -44,7 +44,7 @@ namespace BuckleUp.Controllers
 
             Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            Teacher teacher = _teacherService.GetTeacherWithStudentsAndCourses(teacherId);
+            Teacher teacher = _teacherService.GetTeacherWithStudentsAndCoursesAndAssessmentsById(teacherId);
             return View(teacher);
         }
 

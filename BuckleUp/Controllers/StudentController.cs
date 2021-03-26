@@ -49,7 +49,7 @@ namespace BuckleUp.Controllers
 
             Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            Student student = _studentService.GetStudentWithTeacherCoursesById(studentId);
+            Student student = _studentService.GetStudentWithTeacherCoursesAndAssessmentsById(studentId);
             return View(student);
         }
 

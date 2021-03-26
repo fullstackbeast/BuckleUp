@@ -24,6 +24,7 @@ namespace BuckleUp.Migrations
                         .HasColumnType("varbinary(16)");
 
                     b.Property<byte[]>("CourseId")
+                        .IsRequired()
                         .HasColumnType("varbinary(16)");
 
                     b.Property<DateTime>("StartTime")
@@ -33,7 +34,14 @@ namespace BuckleUp.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<byte[]>("TeacherId")
+                        .IsRequired()
                         .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -51,6 +59,7 @@ namespace BuckleUp.Migrations
                         .HasColumnType("varbinary(16)");
 
                     b.Property<byte[]>("TeacherId")
+                        .IsRequired()
                         .HasColumnType("varbinary(16)");
 
                     b.Property<string>("Title")
@@ -61,6 +70,41 @@ namespace BuckleUp.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.Entities.Question", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<byte[]>("AssessmentId")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("CorrectOption")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Option1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Option2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Option3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Option4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QuestionText")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessmentId");
+
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("BuckleUp.Models.Entities.Role", b =>
@@ -206,19 +250,34 @@ namespace BuckleUp.Migrations
             modelBuilder.Entity("BuckleUp.Models.Entities.Assessment", b =>
                 {
                     b.HasOne("BuckleUp.Models.Entities.Course", "Course")
-                        .WithMany("Assessments")
-                        .HasForeignKey("CourseId");
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BuckleUp.Models.Entities.Teacher", "Teacher")
                         .WithMany("Assessments")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BuckleUp.Models.Entities.Course", b =>
                 {
                     b.HasOne("BuckleUp.Models.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.Entities.Question", b =>
+                {
+                    b.HasOne("BuckleUp.Models.Entities.Assessment", "Assessment")
+                        .WithMany("Questions")
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BuckleUp.Models.StudentAssessment", b =>

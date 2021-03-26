@@ -37,11 +37,27 @@ namespace BuckleUp.Domain.Repository
             return _context.Teachers.Find(id);
         }
 
+        public Teacher FindTeacherWithAssessmentsById(Guid id)
+        {
+             return _context.Teachers
+            .Include(tch => tch.Assessments)
+            .FirstOrDefault(tch => tch.Id == id);
+        }
+
         public Teacher FindTeacherWithCoursesById(Guid id)
         {
             return _context.Teachers
             .Include(tch => tch.Courses)
             .FirstOrDefault(tch => tch.Id == id);
+        }
+
+        public Teacher FindTeacherWithStudentsAndCoursesAndAssessmentsById(Guid id)
+        {
+            return _context.Teachers
+            .Include(tch => tch.Courses)
+            .Include(tch => tch.Assessments)
+           .Include(tch => tch.TeacherStudents)
+           .ThenInclude(tchstd => tchstd.Student).FirstOrDefault(tch => tch.Id == id);
         }
 
         public Teacher FindTeacherWithStudentsAndCoursesById(Guid id)

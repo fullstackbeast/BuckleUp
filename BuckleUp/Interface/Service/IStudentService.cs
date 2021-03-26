@@ -14,8 +14,11 @@ namespace BuckleUp.Interface.Service
         public Student FindByEmail(String email);
         public Student GetStudentWithTeachers(Guid id);
         public Student GetStudentWithTeacherCoursesById (Guid id);
+        public Student GetStudentWithTeacherCoursesAndAssessmentsById (Guid id);
         public Student Enroll (Guid id, Guid courseID);
         public Student UnEnroll (Guid id, StudentCourse studentCourse);
+
+         public List<Student> GetAllStudentOfferingACourse(Guid courseId);
 
         public Student UpdateStudent(Student student);
 

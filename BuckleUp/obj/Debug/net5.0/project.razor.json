@@ -15603,6 +15603,11 @@
   "RootNamespace": "BuckleUp",
   "Documents": [
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\Create.cshtml",
+      "TargetPath": "Views\\Assessment\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
@@ -15640,6 +15645,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\DashBoard.cshtml",
       "TargetPath": "Views\\Student\\DashBoard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\Details.cshtml",
+      "TargetPath": "Views\\Assessment\\Details.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15690,6 +15700,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Course\\Enrolled.cshtml",
+      "TargetPath": "Views\\Course\\Enrolled.cshtml",
       "FileKind": "mvc"
     },
     {
