@@ -52,6 +52,15 @@ namespace BuckleUp.Domain.Repository
                 .FirstOrDefault(ass => ass.Id == id);
         }
 
+        public Assessment FindAssessmentAndQuestionsWithStudentsById(Guid id)
+        {
+            return _context.Assessments
+                .Include(ass => ass.Questions)
+                .Include(ass => ass.StudentAssessments)
+                .ThenInclude(stdass => stdass.Student)
+                .FirstOrDefault(ass => ass.Id == id);
+        }
+
         public Assessment FindById(Guid id)
         {
             return _context.Assessments.Find(id);

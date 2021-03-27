@@ -1,0 +1,12 @@
+.assessmentresultoption{
+    border: 2px solid #ece9e4;
+    margin-bottom: 1em;
+    padding : 10px 5px;
+}
+.assessmentresultcorrectanswer{
+    background-color: var(--selectedColor);
+}
+
+.assessmentresultwronganswer{
+    background-color: #df9d9d;
+}

@@ -1,0 +1,39 @@
+@using BuckleUp.Models.Entities
+@model BuckleUp.Models.ViewModels.TakeAssessmentVM
+
+<h4>Taking the assessment</h4>
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="POST" asp-action="TakeAssessment">
+            @for (int i = 0; i < Model.questions.Length; i++)
+            {
+                Question question = Model.questions[i];
+
+                <h3> @question.QuestionText</h3>
+
+                <div class="radiobtn">
+                    <input type="radio" id="@question.Id-Option1" asp-for="@Model.selectedAnswer[i]" value="Option1" />
+                    <label for="@question.Id-Option1">@question.Option1</label>
+                </div>
+
+                <div class="radiobtn">
+                    <input type="radio" id="@question.Id-Option2" asp-for="@Model.selectedAnswer[i]" value="Option2" />
+                    <label for="@question.Id-Option2">@question.Option2</label>
+                </div>
+
+                <div class="radiobtn">
+                    <input type="radio" id="@question.Id-Option3" asp-for="@Model.selectedAnswer[i]" value="Option3" />
+                    <label for="@question.Id-Option3">@question.Option3</label>
+                </div>
+                <div class="radiobtn">
+                    <input type="radio" id="@question.Id-Option4" asp-for="@Model.selectedAnswer[i]" value="Option4" />
+                    <label for="@question.Id-Option4">@question.Option4</label>
+                </div>
+            }
+
+             <input type="submit" value="Submit" class="btn btn-success" />
+
+        </form>
+    </div>
+</div>

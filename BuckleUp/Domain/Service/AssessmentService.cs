@@ -65,5 +65,10 @@ namespace BuckleUp.Domain.Service
         {
             return _assessmentRepository.Add(assessment);
         }
+
+        public Assessment GetAssessmentAndQuestionsWithStudentsById(Guid id)
+        {
+            return _assessmentRepository.FindAssessmentAndQuestionsWithStudentsById(id);
+        }
     }
 }

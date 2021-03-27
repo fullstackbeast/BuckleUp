@@ -17,5 +17,10 @@ namespace BuckleUp.Domain.Service
             _questionRepository.AddMany(questions);
             return questions;
         }
+
+        public bool IsRightAnswer(Question question, string option)
+        {
+           return question.CorrectOption.Equals(option);
+        }
     }
 }

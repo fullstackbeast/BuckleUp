@@ -110,5 +110,19 @@ namespace BuckleUp.Domain.Service
         {
             return _studentRepository.FindStudentWithTeacherCoursesAndAssessmentById(id);
         }
+
+        public Student RegisterAssessmentPerformance(Guid id, Guid assessmentId, int score, int numberOfQuestionsWhenTaken)
+        {
+            Student student = _studentRepository.FindStudentWithCoursesAndAssessmentById(id);
+
+            StudentAssessment studentAssessment = student.StudentAssessments.FirstOrDefault(
+                stdass => stdass.AssessmentId.Equals(assessmentId)
+            );
+
+            studentAssessment.HasTaken = true;
+            studentAssessment.score = score;
+
+            return _studentRepository.Update(student);
+        }
     }
 }

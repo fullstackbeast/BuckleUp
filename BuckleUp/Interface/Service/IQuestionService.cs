@@ -6,6 +6,8 @@ namespace BuckleUp.Interface.Service
     {
 
         public Question[] AddMany(Question[] questions);
+
+        public bool IsRightAnswer(Question question, string option);
          
     }
 }

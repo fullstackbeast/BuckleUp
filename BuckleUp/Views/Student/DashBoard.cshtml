@@ -6,7 +6,6 @@
 
 <h3>Logged in as @Model.FirstName  @Model.LastName</h3>
 
-
 <br/>
 
 @if(Model.TeacherStudents.Count() == 0){
@@ -41,15 +40,38 @@ else if(Model.StudentCourses.Count() != 0){
      <a asp-action = "Enroll"><button class="btn btn-primary">Enroll</button></a>
 }
 
+<br/>
+<br/>
+<h3>ASSESSMENTS</h3>
+
 @if(Model.StudentAssessments.Count() == 0){
     <h4>You do not have any Assessment</h4>
 }
 
 else{
-    <h3>Assessments</h3>
-    @foreach(var item in Model.StudentAssessments){
-        <h3> @item.Assessment.Title</h3>
-    }
+    
+    <table class="table">
+        <tr>
+            <th>Assessment</th>
+            <th>Assessment status</th>
+            <th>Assessment Score</th>
+        </tr>
+
+        @foreach(var item in Model.StudentAssessments){
+            <tr> 
+                <td> 
+                    <a asp-action="Details" asp-controller="Assessment" asp-route-id="@item.Assessment.Id" >
+                        <h3> @item.Assessment.Title</h3>
+                    </a>
+                </td>
+            
+                <td> @(item.HasTaken ? "Taken" : "Not Taken") </td>
+
+                <td>@(item.HasTaken ? item.score : "nill")</td>
+
+            </tr>
+        }
+    </table>
 }
 
 

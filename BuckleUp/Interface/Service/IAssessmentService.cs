@@ -11,6 +11,7 @@ namespace BuckleUp.Interface.Service
         public Assessment GetById(Guid id);
         public Assessment GetAssessmentAndQuestionsById(Guid id);
         public List<Assessment> GetAllCourseAssessment(Guid courseId);
+        public Assessment GetAssessmentAndQuestionsWithStudentsById(Guid id);
         public Assessment AddAssessmentToStudents(Assessment assessment);
     }
 }

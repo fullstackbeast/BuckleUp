@@ -10,5 +10,8 @@ namespace BuckleUp.Models
 
         public Guid AssessmentId {get; set;}
         public Assessment Assessment{get; set;}
+
+        public bool HasTaken { get; set; } = false;
+        public int score { get; set;} = 0;
     }
 }

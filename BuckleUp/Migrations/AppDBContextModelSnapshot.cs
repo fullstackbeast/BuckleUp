@@ -210,6 +210,12 @@ namespace BuckleUp.Migrations
                     b.Property<byte[]>("AssessmentId")
                         .HasColumnType("varbinary(16)");
 
+                    b.Property<bool>("HasTaken")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("score")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId", "AssessmentId");
 
                     b.HasIndex("AssessmentId");
