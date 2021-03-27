@@ -10,7 +10,6 @@ namespace BuckleUp.Models.Entities
             TeacherStudents = new List<TeacherStudent>();
             StudentCourses = new List<StudentCourse>();
         }
-
         public ICollection<TeacherStudent> TeacherStudents {get; set;}
         public ICollection<StudentCourse> StudentCourses {get; set;}
         public ICollection<StudentAssessment> StudentAssessments {get; set;}

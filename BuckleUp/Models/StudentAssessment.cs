@@ -13,5 +13,6 @@ namespace BuckleUp.Models
 
         public bool HasTaken { get; set; } = false;
         public int score { get; set;} = 0;
+        public int NumberOfQuestionsWhenTaken { get; set;}
     }
 }

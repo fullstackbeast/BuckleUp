@@ -6,6 +6,7 @@
 
     
     @if(Model.Assessment.TeacherId.Equals(Model.TeacherId)){
+        <h1>Questions</h1>
         @foreach(var question in Model.Assessment.Questions){
             <h4>@question.QuestionText</h4>
             <div style="margin-left: 20px; display: none;">
@@ -24,17 +25,19 @@
             </div>   
         }
 
-        
+        <br/>
+        <br/>
         <h1>Students That Have Taken Assessment</h1>
       
-        List<StudentAssessment> studentAssessments = Model.Assessment.StudentAssessments.Where(stdass => stdass.HasTaken).ToList();
+        List<StudentAssessment> takenstudentAssessments = Model.Assessment.StudentAssessments.Where(stdass => stdass.HasTaken).ToList();
+        List<StudentAssessment> untakenstudentAssessments = Model.Assessment.StudentAssessments.Where(stdass => stdass.HasTaken == false).ToList();
 
         <table class="table">
             <tr>
                 <th>Student Name</th>
                 <th>Score</th>
             </tr>
-            @foreach(var studentAssessment in studentAssessments){
+            @foreach(var studentAssessment in takenstudentAssessments){
                 <tr>
                     <td>@studentAssessment.Student.FirstName @studentAssessment.Student.LastName</td>
                     <td>@studentAssessment.score</td>
@@ -44,8 +47,24 @@
         
         
         
-
-        <h1>Students That Have Not Assessment</h1>      
+        <br/>
+        <br/>
+        <h1>Students That Have Not Assessment</h1>
+        @if(untakenstudentAssessments.Count() == 0){
+            <h1>All students have taken this assessment</h1>
+        }
+        else{
+             <table class="table">
+            <tr>
+                <th>Student Name</th>
+            </tr>
+            @foreach(var studentAssessment in untakenstudentAssessments){
+                <tr>
+                    <td>@studentAssessment.Student.FirstName @studentAssessment.Student.LastName</td>
+                </tr>
+            }
+        </table>
+        }      
     }
 }
 

@@ -57,6 +57,20 @@ namespace BuckleUp.Models
             .HasOne(Sa => Sa.Assessment)
             .WithMany(Ass => Ass.StudentAssessments)
             .HasForeignKey(Sa => Sa.AssessmentId);
+
+            // Configuring Many to many relationship between Quiz and Player
+            modelBuilder.Entity<QuizPlayer>()
+            .HasKey(Qp => new {Qp.QuizId, Qp.PlayerId});
+            
+            modelBuilder.Entity<QuizPlayer>()
+            .HasOne(Qp => Qp.Quiz)
+            .WithMany(Qz => Qz.QuizPlayers)
+            .HasForeignKey(Qp => Qp.QuizId);
+
+            modelBuilder.Entity<QuizPlayer>()
+            .HasOne(Qp => Qp.Player)
+            .WithMany(ply => ply.QuizPlayers)
+            .HasForeignKey(Qp => Qp.PlayerId);
             
         }
 
@@ -67,5 +81,9 @@ namespace BuckleUp.Models
         public DbSet<Assessment> Assessments {get; set;}
         public DbSet<Question> Questions {get; set;}
         public DbSet<Role> Roles {get; set;}
+
+        public DbSet<Quiz> Quizzes {get; set;}
+        public DbSet<Player> Players {get; set;}
+        public DbSet<PersonalUser> PersonalUsers {get; set;}
     }
 }

@@ -3,14 +3,16 @@ using System;
 using BuckleUp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BuckleUp.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210327212553_AddeddQuizAndPlayerAndPersonalUser")]
+    partial class AddeddQuizAndPlayerAndPersonalUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,10 +153,15 @@ namespace BuckleUp.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(16)");
 
+                    b.Property<byte[]>("PersonalUserId")
+                        .HasColumnType("varbinary(16)");
+
                     b.Property<string>("status")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonalUserId");
 
                     b.ToTable("Quizzes");
                 });
@@ -363,6 +370,13 @@ namespace BuckleUp.Migrations
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.Entities.Quiz", b =>
+                {
+                    b.HasOne("BuckleUp.Models.Entities.PersonalUser", null)
+                        .WithMany("Quizzes")
+                        .HasForeignKey("PersonalUserId");
                 });
 
             modelBuilder.Entity("BuckleUp.Models.Entities.QuizPlayer", b =>
