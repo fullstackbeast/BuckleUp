@@ -1,9 +1,10 @@
 @model BuckleUp.Models.ViewModels.RegisterQuizVM
 
-<h1>Quiz - @ViewBag.Message</h1>
-<h1>Quiz - @ViewBag.Message</h1>
+<h1>Quiz By @Model.CreatorName</h1>
 
-<form>
+<h4 class="text-danger"> @ViewBag.Message </h4>
+
+<form method="POST">
     @if (User.Identity.IsAuthenticated && (User.IsInRole("Student")))
     {
        

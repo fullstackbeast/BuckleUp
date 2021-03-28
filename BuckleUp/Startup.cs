@@ -35,11 +35,12 @@ namespace BuckleUp
               Configuration.GetConnectionString("AppDBContextConnection")
           ));
 
-           services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(config=>{
-                config.LoginPath="/Auth/Login";
-                config.Cookie.Name = "BuckleUp";
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+             .AddCookie(config =>
+             {
+                 config.LoginPath = "/Auth/Login";
+                 config.Cookie.Name = "BuckleUp";
+             });
             services.AddHttpContextAccessor();
 
 
@@ -48,7 +49,7 @@ namespace BuckleUp
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IStudentService, StudentService>();
-            
+
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ICourseService, CourseService>();
 
@@ -60,6 +61,8 @@ namespace BuckleUp
 
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IQuizService, QuizService>();
+
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
 
             services.AddScoped<IAuthRepository, AuthRepository>();
 

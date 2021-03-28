@@ -1,4 +1,37 @@
-<h1>Users Registered For this Quiz</h1>
+@model BuckleUp.Models.ViewModels.QuizRoomVM
+
+
+@if(Model.IsQuizCreator){
+    <h1>Welcome</h1>
+    <br/>
+    <h1>Players:</h1>
+    @foreach (var player in Model.Players)
+    {
+        <h5>@player.Player.Name</h5>
+    }
+
+    <button class="btn btn-primary">Start Quiz</button>
+}
+else{
+
+    <h3>You're playing as - @Model.PlayerUsername </h3>
+    <br/>
+    <h1>Other Players:</h1>
+
+    @foreach (var player in Model.Players)
+    {
+        if (!player.Player.Name.Equals(Model.PlayerUsername))
+        {
+            <h5>@player.Player.Name</h5>
+        }
+    }
+
+    <br/><br/>
+
+    <p><i>Waiting for Quiz Creator To start </i></p>
+}
+
+
 
 
 

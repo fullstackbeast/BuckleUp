@@ -9,25 +9,46 @@ namespace BuckleUp.Domain.Service
     public class QuizService : IQuizService
     {
         private readonly IQuizRepository _quizRepository;
-        public QuizService(IQuizRepository quizRepository)
+        private readonly IPlayerRepository _playerRepository;
+        public QuizService(IQuizRepository quizRepository, IPlayerRepository playerRepository)
         {
+            _playerRepository = playerRepository;
             _quizRepository = quizRepository;
         }
 
         public Quiz AddPlayerToQuiz(string link, Player player)
         {
-            throw new NotImplementedException();
+            _playerRepository.Add(player);
+
+            Quiz quiz = _quizRepository.FindQuizWithPlayersByLink(link);
+
+            quiz.QuizPlayers.Add(new QuizPlayer
+            {
+                QuizId = quiz.Id,
+                PlayerId = player.Id
+            });
+
+            _quizRepository.Update(quiz);
+
+            return quiz;
         }
 
-        public Quiz Create(Guid creatorId, List<QuizQuestion> questions)
+        public Quiz GetByLink(string link)
+        {
+            return _quizRepository.FindByLink(link);
+        }
+
+        public Quiz Create(Guid creatorId, string creatorRole, List<QuizQuestion> questions)
         {
             string link = generateLink();
 
-            Quiz newQuiz = new Quiz{
+            Quiz newQuiz = new Quiz
+            {
                 Id = Guid.NewGuid(),
                 CreatorId = creatorId,
-                status = "unplayed", 
-                Questions = questions, 
+                CreatorRole = creatorRole,
+                status = "unplayed",
+                Questions = questions,
                 Link = link
             };
 
@@ -40,15 +61,17 @@ namespace BuckleUp.Domain.Service
             throw new NotImplementedException();
         }
 
-        public string generateLink(){
+        public string generateLink()
+        {
             Guid guid = Guid.NewGuid();
 
             string link = string.Empty;
 
-            string [] guidparts = guid.ToString().Split("-");
+            string[] guidparts = guid.ToString().Split("-");
 
-            foreach(string p in guidparts){
-                link += p.Substring(0,2);
+            foreach (string p in guidparts)
+            {
+                link += p.Substring(0, 2);
             }
 
             return link;
@@ -57,6 +80,11 @@ namespace BuckleUp.Domain.Service
         public List<Quiz> GetAllGuizByCreatorId(Guid creatorId)
         {
             return _quizRepository.FindAllQuizByCreatorId(creatorId);
+        }
+
+        public Quiz GetQuizWithPlayersByLink(string link)
+        {
+            return _quizRepository.FindQuizWithPlayersByLink(link);
         }
     }
 }
