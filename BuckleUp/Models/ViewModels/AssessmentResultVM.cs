@@ -5,7 +5,7 @@ namespace BuckleUp.Models.ViewModels
 {
     public class AssessmentResultVM
     {
-        public Question [] Questions {get; set;}
+        public AssessmentQuestion [] Questions {get; set;}
 
         public List<string> Answers {get; set;}
     }

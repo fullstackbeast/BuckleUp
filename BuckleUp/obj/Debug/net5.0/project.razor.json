@@ -15603,8 +15603,18 @@
   "RootNamespace": "BuckleUp",
   "Documents": [
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Play.cshtml",
+      "TargetPath": "Views\\Quiz\\Play.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\Create.cshtml",
       "TargetPath": "Views\\Assessment\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Room.cshtml",
+      "TargetPath": "Views\\Quiz\\Room.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15615,6 +15625,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Create.cshtml",
+      "TargetPath": "Views\\Quiz\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15693,6 +15708,16 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_QuestionsAndAnswersIntake.cshtml",
+      "TargetPath": "Views\\Shared\\_QuestionsAndAnswersIntake.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Index.cshtml",
+      "TargetPath": "Views\\Quiz\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Create.cshtml",
       "TargetPath": "Views\\Student\\Create.cshtml",
       "FileKind": "mvc"
@@ -15705,6 +15730,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Test\\ForStudent.cshtml",
       "TargetPath": "Views\\Test\\ForStudent.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Register.cshtml",
+      "TargetPath": "Views\\Quiz\\Register.cshtml",
       "FileKind": "mvc"
     },
     {

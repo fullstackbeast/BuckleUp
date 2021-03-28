@@ -14,6 +14,7 @@ namespace BuckleUp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+
             // Configuring Many to many relationship between Teacher and Student
             modelBuilder.Entity<TeacherStudent>()
             .HasKey(Ts => new {Ts.TeacherId, Ts.StudentId});
@@ -79,8 +80,9 @@ namespace BuckleUp.Models
         public DbSet<Student> Students {get; set;}
         public DbSet<Course> Courses {get; set;}
         public DbSet<Assessment> Assessments {get; set;}
-        public DbSet<Question> Questions {get; set;}
         public DbSet<Role> Roles {get; set;}
+        public DbSet<AssessmentQuestion> AssessmentQuestions {get; set;}
+        public DbSet<QuizQuestion> QuizQuestions {get; set;}
 
         public DbSet<Quiz> Quizzes {get; set;}
         public DbSet<Player> Players {get; set;}

@@ -5,7 +5,8 @@ namespace BuckleUp.Interface.Service
     public interface IQuestionService
     {
 
-        public Question[] AddMany(Question[] questions);
+        public AssessmentQuestion[] AddManyAssessmentQuestions(AssessmentQuestion[] questions);
+        public QuizQuestion[] AddManyQuizQuestions(QuizQuestion[] questions);
 
         public bool IsRightAnswer(Question question, string option);
          

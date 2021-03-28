@@ -12,10 +12,14 @@ namespace BuckleUp.Domain.Service
             _questionRepository = questionRepository;
         }
 
-        public Question[] AddMany(Question[] questions)
+        public AssessmentQuestion[] AddManyAssessmentQuestions(AssessmentQuestion[] questions)
         {
-            _questionRepository.AddMany(questions);
-            return questions;
+            return _questionRepository.AddManyAssessmentQuestion(questions);
+        }
+
+        public QuizQuestion[] AddManyQuizQuestions(QuizQuestion[] questions)
+        {
+            return _questionRepository.AddManyQuizQuestion(questions);
         }
 
         public bool IsRightAnswer(Question question, string option)

@@ -7,7 +7,7 @@ namespace BuckleUp.Models.ViewModels
     {
         
 
-        public Question [] questions {get; set;}
+        public AssessmentQuestion [] questions {get; set;}
 
         public List<string> selectedAnswer {get; set;}
         

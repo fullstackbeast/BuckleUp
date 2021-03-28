@@ -12,9 +12,17 @@ namespace BuckleUp.Domain.Repository
             _context = context;
         }
 
-        public Question[] AddMany(Question[] questions)
+
+        public AssessmentQuestion[] AddManyAssessmentQuestion(AssessmentQuestion[] questions)
         {
-            _context.AddRange(questions);
+            _context.AssessmentQuestions.AddRange(questions);
+            _context.SaveChanges();
+            return questions;
+        }
+
+        public QuizQuestion[] AddManyQuizQuestion(QuizQuestion[] questions)
+        {
+            _context.QuizQuestions.AddRange(questions);
             _context.SaveChanges();
             return questions;
         }

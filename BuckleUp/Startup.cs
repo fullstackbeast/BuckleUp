@@ -58,6 +58,9 @@ namespace BuckleUp
             services.AddScoped<IAssessmentRepository, AssessmentRepository>();
             services.AddScoped<IAssessmentService, AssessmentService>();
 
+            services.AddScoped<IQuizRepository, QuizRepository>();
+            services.AddScoped<IQuizService, QuizService>();
+
             services.AddScoped<IAuthRepository, AuthRepository>();
 
         }

@@ -7,12 +7,13 @@ namespace BuckleUp.Models.Entities
     {
         public Quiz()
         {
-            Questions = new List<Question>();
+            Questions = new List<QuizQuestion>();
             QuizPlayers = new List<QuizPlayer>();
         }
 
         public Guid CreatorId {get; set;}
-        public ICollection<Question> Questions {get; set;}
+        public string Link {get; set;}
+        public ICollection<QuizQuestion> Questions {get; set;}
         public ICollection<QuizPlayer> QuizPlayers { get; set; }
         public string status {get; set;}
         

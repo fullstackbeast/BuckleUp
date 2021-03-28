@@ -6,7 +6,8 @@ namespace BuckleUp.Interface.Repository
     public interface IQuestionRepository
     {
 
-        public Question[] AddMany(Question[] questions);
+        public AssessmentQuestion[] AddManyAssessmentQuestion(AssessmentQuestion[] questions);
+        public QuizQuestion[] AddManyQuizQuestion(QuizQuestion[] questions);
         
     }
 }

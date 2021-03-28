@@ -12,6 +12,6 @@ namespace BuckleUp.Models.ViewModels
         public List<SelectListItem> CourseSelectList {get; set;}
         public Guid CourseId {get; set;}
         public int NumberOfQuestions {get; set;}
-        public Question [] Questions { get; set;}   
+        public AssessmentQuestion [] Questions { get; set;}   
     }
 }

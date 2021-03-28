@@ -18,9 +18,11 @@ namespace BuckleUp.Controllers
     {
         private readonly IStudentService _studentService;
         private readonly ITeacherService _teacherService;
+        private readonly IQuizService _quizService;
 
-        public StudentController(IStudentService studentService, ITeacherService teacherService)
+        public StudentController(IStudentService studentService, ITeacherService teacherService, IQuizService quizService)
         {
+            _quizService = quizService;
             _teacherService = teacherService;
             _studentService = studentService;
         }
@@ -50,7 +52,16 @@ namespace BuckleUp.Controllers
             Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             Student student = _studentService.GetStudentWithTeacherCoursesAndAssessmentsById(studentId);
-            return View(student);
+
+            List<Quiz> studentQuizzes = _quizService.GetAllGuizByCreatorId(studentId);
+
+            StudentDashboardVM studentDashboardVm = new StudentDashboardVM{
+                Student = student,
+                Quizzes = studentQuizzes
+            };
+
+
+            return View(studentDashboardVm);
         }
 
 
@@ -110,22 +121,24 @@ namespace BuckleUp.Controllers
             EnrollVM enrollVM = new EnrollVM
             {
                 TeacherSelectList = teacherSelect,
-                TeacherCourses = teacherCourses, 
+                TeacherCourses = teacherCourses,
                 Student = student
             };
 
             ViewBag.TeacherId = teacherId.Value;
 
-            StudentCourse studentCourse = student.StudentCourses.FirstOrDefault( stdcou => stdcou.CourseId == courseId);
-            
-            if(courseId != null && studentCourse == null) _studentService.Enroll(studentId, courseId.Value);
-            if(courseId != null && studentCourse != null) _studentService.UnEnroll(studentId, studentCourse);
-            if(sourceId != null) {
-                return RedirectToAction(controllerName: "Course",  actionName: "Details", routeValues: new {
+            StudentCourse studentCourse = student.StudentCourses.FirstOrDefault(stdcou => stdcou.CourseId == courseId);
+
+            if (courseId != null && studentCourse == null) _studentService.Enroll(studentId, courseId.Value);
+            if (courseId != null && studentCourse != null) _studentService.UnEnroll(studentId, studentCourse);
+            if (sourceId != null)
+            {
+                return RedirectToAction(controllerName: "Course", actionName: "Details", routeValues: new
+                {
                     Id = courseId
                 });
             }
-            
+
             return View(enrollVM);
 
 

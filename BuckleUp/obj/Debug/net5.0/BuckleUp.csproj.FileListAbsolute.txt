@@ -77,3 +77,11 @@ C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Assessment\Det
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Course\Enrolled.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Assessment\TakeAssessment.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Assessment\Result.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Quiz\Create.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Shared\_QuestionsAndAnswersIntake.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Quiz\Index.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Quiz\Play.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Codelearnershub\BuckleUp\BuckleUp\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Quiz\Register.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Quiz\Room.cshtml.g.cs

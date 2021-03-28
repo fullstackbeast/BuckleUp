@@ -98,19 +98,12 @@ namespace BuckleUp.Controllers
                     TeacherId = teacherId,
                     Type = viewModel.Type,
                     Title = viewModel.Title,
+                    Questions = viewModel.Questions,
                     CourseId = viewModel.CourseId
                 };
 
-                foreach (var question in viewModel.Questions)
-                {
-                    question.AssessmentId = assessment.Id;
-                }
-
                 _teacherService.AddAssessment(teacherId, assessment);
-                _questionService.AddMany(viewModel.Questions);
-
-
-
+             
                 _assessmentService.AddAssessmentToStudents(assessment);
 
                 return View(viewModel);
@@ -119,7 +112,7 @@ namespace BuckleUp.Controllers
             else if (Request.Form["submitbtn"].Equals("Remove A Question"))
             {
 
-                Question[] newQuestions = new Question[viewModel.Questions.Length - 1];
+                AssessmentQuestion[] newQuestions = new AssessmentQuestion[viewModel.Questions.Length - 1];
 
                 for (int q = 0; q < viewModel.Questions.Length - 1; q++)
                 {

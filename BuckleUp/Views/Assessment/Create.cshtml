@@ -1,8 +1,9 @@
 @using BuckleUp.Models.Entities
+@using BuckleUp.Models.ViewModels
 @model BuckleUp.Models.ViewModels.CreateAssessmentVM
 
 @{
-    Model.Questions = new Question[Model.NumberOfQuestions];
+    Model.Questions = new AssessmentQuestion[Model.NumberOfQuestions];
 }
 
 <h1></h1>Creating Assessment</h1>
@@ -29,9 +30,28 @@
                 <span asp-validation-for="CourseId" class="text-danger"></span>
             </div>
 
-            @for (int i = 0; i < Model.NumberOfQuestions; i++)
-            {
-                <div class="form-group">
+            @{
+                QuestionIntakeVM questionIntakeVM = new QuestionIntakeVM{
+                    Questions = Model.Questions
+                };
+            }
+
+            <partial name="_QuestionsAndAnswersIntake" model=@questionIntakeVM />
+
+
+            <div class="form-group" style="display: flex">
+                <input type="submit" name="submitbtn" value="Add New Question" class="btn btn-primary" />
+                <input type="submit" name="submitbtn" value="Remove A Question" class="btn btn-danger" />
+                <input type="submit" name="submitbtn" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@* <div class="form-group">
                     <label asp-for="Questions[i].QuestionText" class="control-label">Question @(i+1)</label>
                     <input asp-for="Questions[i].QuestionText" class="form-control" />
                     <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
@@ -64,15 +84,4 @@
                        <option value="Option3">Option 3</option>
                        <option value="Option3">Option 4</option>
                    </select>
-                </div>
-            }
-
-
-            <div class="form-group" style="display: flex">
-                <input type="submit" name="submitbtn" value="Add New Question" class="btn btn-primary" />
-                <input type="submit" name="submitbtn" value="Remove A Question" class="btn btn-danger" />
-                <input type="submit" name="submitbtn" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+                </div> *@
