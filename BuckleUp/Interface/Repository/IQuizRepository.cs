@@ -11,6 +11,8 @@ namespace BuckleUp.Interface.Repository
          public Quiz FindByLink(string link);
          public Quiz Update(Quiz quiz);
          public Quiz FindQuizWithPlayersByLink(string link);
+         public Quiz FindQuizWithQuestionsByLink(string link);
+         public Quiz FindQuizWithQuestionsAndPlayersByLink(string link);
          public List<Quiz> FindAllQuizByCreatorId(Guid id);
          
     }

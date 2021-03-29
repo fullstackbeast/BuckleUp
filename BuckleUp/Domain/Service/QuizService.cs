@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models.Entities;
@@ -56,9 +57,11 @@ namespace BuckleUp.Domain.Service
         }
 
 
-        public Quiz StartQuiz(Guid id)
+        public Quiz StartQuiz(string link)
         {
-            throw new NotImplementedException();
+            Quiz quiz = _quizRepository.FindByLink(link);
+            quiz.status = "playing";
+            return _quizRepository.Update(quiz);
         }
 
         public string generateLink()
@@ -85,6 +88,31 @@ namespace BuckleUp.Domain.Service
         public Quiz GetQuizWithPlayersByLink(string link)
         {
             return _quizRepository.FindQuizWithPlayersByLink(link);
+        }
+
+        public Quiz GetQuizWithQuestions(string link)
+        {
+            return _quizRepository.FindQuizWithQuestionsByLink(link);
+        }
+
+        public Player GetPlayerById(Guid id)
+        {
+            return _playerRepository.FindById(id);
+        }
+
+        public Quiz SetPlayerScore(string link, Guid playerId, int score)
+        {
+            Quiz quiz = _quizRepository.FindQuizWithPlayersByLink(link);
+
+            quiz.QuizPlayers
+            .FirstOrDefault(qp => qp.PlayerId.Equals(playerId))
+            .HasPlayed = true;
+            
+            quiz.QuizPlayers
+            .FirstOrDefault(qp => qp.PlayerId.Equals(playerId))
+            .Score = score;
+
+            return _quizRepository.Update(quiz);
         }
     }
 }

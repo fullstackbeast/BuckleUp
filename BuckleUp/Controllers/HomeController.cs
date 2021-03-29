@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BuckleUp.Models;
+// using BuckleUp.signalR;
 
 namespace BuckleUp.Controllers
 {
@@ -20,6 +18,7 @@ namespace BuckleUp.Controllers
 
         public IActionResult Index()
         {
+          
             return View();
         }
 

@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BuckleUp.Domain.Repository;
 using BuckleUp.Domain.Service;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models;
+using BuckleUp.signalR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +38,7 @@ namespace BuckleUp
                  config.Cookie.Name = "BuckleUp";
              });
             services.AddHttpContextAccessor();
+            services.AddSignalR();
 
 
             services.AddScoped<ITeacherRepository, TeacherRepository>();
@@ -65,6 +62,8 @@ namespace BuckleUp
             services.AddScoped<IPlayerRepository, PlayerRepository>();
 
             services.AddScoped<IAuthRepository, AuthRepository>();
+
+            services.AddScoped<QuizHub>();
 
         }
 
@@ -90,12 +89,15 @@ namespace BuckleUp
 
             app.UseCookiePolicy();
             //app.UseSession();
+            // app.UseSignalR();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<QuizHub>("/quizHub");
             });
         }
     }

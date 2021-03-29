@@ -1,11 +1,14 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models.Entities;
 using BuckleUp.Models.ViewModels;
+using BuckleUp.signalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BuckleUp.Controllers
 {
@@ -13,8 +16,12 @@ namespace BuckleUp.Controllers
     {
         private readonly IQuizService _quizService;
         private readonly IStudentService _studentService;
-        public QuizController(IQuizService quizService, IStudentService studentService)
+        private readonly IHubContext<QuizHub> _hubContext;
+        private readonly IQuestionService _questionService;
+        public QuizController(IQuizService quizService, IStudentService studentService, IHubContext<QuizHub> hubContext, IQuestionService questionService)
         {
+            _questionService = questionService;
+            _hubContext = hubContext;
             _studentService = studentService;
             _quizService = quizService;
 
@@ -37,11 +44,12 @@ namespace BuckleUp.Controllers
                 switch (quiz.CreatorRole)
                 {
                     case "Student":
-                       
+
                         Student student = _studentService.FindById(quiz.CreatorId);
-                        if(User.Identity.IsAuthenticated && (User.IsInRole("Student"))){
-                              Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-                              if(student.Id.Equals(studentId)) return RedirectToAction(nameof(Room), new { id = id });
+                        if (User.Identity.IsAuthenticated && (User.IsInRole("Student")))
+                        {
+                            Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                            if (student.Id.Equals(studentId)) return RedirectToAction(nameof(Room), new { id = id });
                         }
                         creatorName = $"{student.FirstName} {student.LastName}";
                         break;
@@ -110,10 +118,10 @@ namespace BuckleUp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Room(string id)
+        public async Task<IActionResult> Room(string id)
         {
 
-           Guid playerId = Guid.Empty;
+            Guid playerId = Guid.Empty;
 
             Quiz quiz = _quizService.GetQuizWithPlayersByLink(id);
 
@@ -125,20 +133,21 @@ namespace BuckleUp.Controllers
                 switch (quiz.CreatorRole)
                 {
                     case "Student":
-                     Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                        Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
                         Student student = _studentService.FindById(studentId);
                         if (student.Id.Equals(quiz.CreatorId))
                         {
                             QuizRoomVM roomVM = new QuizRoomVM
                             {
                                 Players = quiz.QuizPlayers,
-                                IsQuizCreator = true
+                                IsQuizCreator = true,
+                                Quiz = quiz
                             };
-                            
+
                             return View(roomVM);
                         }
 
-                    break;
+                        break;
                 }
 
             }
@@ -151,7 +160,6 @@ namespace BuckleUp.Controllers
             catch (FormatException) { return RedirectToAction(nameof(Index)); }
 
 
-
             QuizPlayer player = quiz.QuizPlayers.FirstOrDefault(qp => qp.PlayerId.Equals(playerId));
 
             if (player == null) return RedirectToAction(nameof(Index));
@@ -160,16 +168,108 @@ namespace BuckleUp.Controllers
             QuizRoomVM quizRoomVM = new QuizRoomVM
             {
                 PlayerUsername = player.Player.Name,
-                Players = quiz.QuizPlayers
+                Players = quiz.QuizPlayers,
+                Quiz = quiz,
+                PlayerHasPlayed = player.HasPlayed,
+                PlayerScore = player.Score
             };
 
+            await _hubContext.Clients.All.SendAsync("receivemessage", $"{player.Player.Name}-{id}");
             return View(quizRoomVM);
         }
+        public async Task<IActionResult> Start(string id)
+        {
+            Console.WriteLine(id);
+            _quizService.StartQuiz(id);
+            await _hubContext.Clients.All.SendAsync("startquiz", $"{id}");
+            return RedirectToAction(nameof(Room), new { id = id });
+        }
+
         public IActionResult Play(string id)
         {
-            ViewBag.Message = id;
-            return View();
+
+            Guid playerId = Guid.Empty;
+
+            string playerIdString = HttpContext.Request.Cookies["drx1e"];
+
+            if (playerIdString == null) return RedirectToAction(nameof(Index));
+
+            try { Guid.TryParse(playerIdString, out playerId); }
+            catch (FormatException) { return RedirectToAction(nameof(Index)); }
+
+            Quiz quizplayers = _quizService.GetQuizWithPlayersByLink(id);
+
+            QuizPlayer player = quizplayers.QuizPlayers.FirstOrDefault(qp => qp.PlayerId.Equals(playerId));
+
+            if(player == null || player.HasPlayed){
+                return RedirectToAction(nameof(Room), new { id = id });
+            }
+
+            Quiz quiz = _quizService.GetQuizWithQuestions(id);
+
+            PlayQuizVM playQuizVM = new PlayQuizVM
+            {
+                Questions = quiz.Questions.ToArray(),
+                PlayerName = player.Player.Name
+            };
+
+            return View(playQuizVM);
         }
+
+
+        [HttpPost]
+        public IActionResult Play(string id, PlayQuizVM playQuizVM)
+        {
+            Guid playerId = Guid.Empty;
+            int correctAnswers = 0;
+
+            string playerIdString = HttpContext.Request.Cookies["drx1e"];
+
+            if (playerIdString == null) return RedirectToAction(nameof(Index));
+
+            try { Guid.TryParse(playerIdString, out playerId); }
+            catch (FormatException) { return RedirectToAction(nameof(Index)); }
+
+            Quiz quiz = _quizService.GetQuizWithQuestions(id);
+            
+            Quiz quizWithPlayers = _quizService.GetQuizWithPlayersByLink(id);
+
+            Question[] questions = quiz.Questions.ToArray();
+
+
+            playQuizVM.Questions = quiz.Questions.ToArray();
+
+            string answers = string.Empty;
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                Question question = questions[i];
+
+                string optionIndexString = $"selectedAnswer[{i}]";
+
+                string option = Request.Form[optionIndexString];
+
+                if (option != null)
+                {
+                    answers += option;
+                    if (_questionService.IsRightAnswer(question, option)) correctAnswers++;
+                }
+                else
+                {
+                    answers += "null";
+                }
+
+                if (i < questions.Length - 1) answers += "-";
+
+            }
+
+            _quizService.SetPlayerScore(id, playerId, correctAnswers);
+
+             return RedirectToAction(nameof(Room), new { id = id });
+
+        }
+
+
         public IActionResult Create()
         {
 
@@ -226,9 +326,6 @@ namespace BuckleUp.Controllers
 
                 return View(viewModel);
             }
-
-
-
             return View(viewModel);
         }
     }

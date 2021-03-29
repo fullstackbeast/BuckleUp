@@ -17,6 +17,7 @@ namespace BuckleUp.Models.Entities
         public ICollection<QuizQuestion> Questions {get; set;}
         public ICollection<QuizPlayer> QuizPlayers { get; set; }
         public string status {get; set;}
+        public bool ShowPlayerResult {get; set;} = false;
         
     }
 }

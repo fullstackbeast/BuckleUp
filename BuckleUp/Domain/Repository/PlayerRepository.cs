@@ -1,3 +1,4 @@
+using System;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Models;
 using BuckleUp.Models.Entities;
@@ -17,6 +18,11 @@ namespace BuckleUp.Domain.Repository
             _context.Players.Add(player);
             _context.SaveChanges();
             return player;
+        }
+
+        public Player FindById(Guid id)
+        {
+            return _context.Players.Find(id);
         }
     }
 }

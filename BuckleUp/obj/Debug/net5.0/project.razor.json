@@ -15703,6 +15703,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_QuestionAndAnswerTaking.cshtml",
+      "TargetPath": "Views\\Shared\\_QuestionAndAnswerTaking.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\TakeAssessment.cshtml",
       "TargetPath": "Views\\Assessment\\TakeAssessment.cshtml",
       "FileKind": "mvc"

@@ -11,5 +11,6 @@ namespace BuckleUp.Models.Entities
         public Guid PlayerId{ get; set;}
 
         public int Score{ get; set;}
+        public bool HasPlayed{ get; set;} = false;
     }
 }

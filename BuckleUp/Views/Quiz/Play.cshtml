@@ -1,1 +1,20 @@
+@using BuckleUp.Models.ViewModels
+@model BuckleUp.Models.ViewModels.PlayQuizVM
+
 <h1>Playing Quiz: @ViewBag.Message </h1>
+<h1>Playing As: @Model.PlayerName</h1>
+
+
+<form method="POST" asp-action="Play">
+    @{
+        QuestionOptionDisplayVM questionOptionDisplayVM = new  QuestionOptionDisplayVM{
+            questions = Model.Questions,
+            selectedAnswer = new string[Model.Questions.Length] 
+        };
+    }
+
+    <partial name="_QuestionAndAnswerTaking" model=@questionOptionDisplayVM/>
+
+     <input type="submit" value="Submit" class="btn btn-success" />
+
+</form>

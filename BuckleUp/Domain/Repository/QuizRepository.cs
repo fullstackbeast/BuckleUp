@@ -46,6 +46,17 @@ namespace BuckleUp.Domain.Repository
             .FirstOrDefault(qz => qz.Link.Equals(link));
         }
 
+        public Quiz FindQuizWithQuestionsAndPlayersByLink(string link)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Quiz FindQuizWithQuestionsByLink(string link)
+        {
+            return _context.Quizzes.Include(q => q.Questions)
+            .FirstOrDefault(q => q.Link.Equals(link));
+        }
+
         public Quiz Update(Quiz quiz)
         {
             _context.Quizzes.Update(quiz);
