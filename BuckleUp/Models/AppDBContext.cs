@@ -14,8 +14,31 @@ namespace BuckleUp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            modelBuilder.Entity<User>()
+            .HasOne(user => user.Teacher)
+            .WithOne(tch => tch.User);
 
-            // Configuring Many to many relationship between Teacher and Student
+            modelBuilder.Entity<User>()
+            .HasOne(user => user.Student)
+            .WithOne(std => std.User);
+            
+            modelBuilder.Entity<Teacher>()
+            .HasKey(tch => tch.UserId);
+
+            
+            modelBuilder.Entity<Student>()
+            .HasKey(std => std.UserId);
+
+
+            modelBuilder.Entity<Teacher>()
+            .Property(tch => tch.UserId)
+            .HasColumnName("Id");
+
+            modelBuilder.Entity<Student>()
+            .Property(std => std.UserId)
+            .HasColumnName("Id");
+
+              // Configuring Many to many relationship between Teacher and Student
             modelBuilder.Entity<TeacherStudent>()
             .HasKey(Ts => new {Ts.TeacherId, Ts.StudentId});
             
@@ -75,17 +98,17 @@ namespace BuckleUp.Models
             
         }
 
+
         public DbSet<User> Users {get; set;}
         public DbSet<Teacher> Teachers {get; set;}
         public DbSet<Student> Students {get; set;}
         public DbSet<Course> Courses {get; set;}
         public DbSet<Assessment> Assessments {get; set;}
-        public DbSet<Role> Roles {get; set;}
         public DbSet<AssessmentQuestion> AssessmentQuestions {get; set;}
         public DbSet<QuizQuestion> QuizQuestions {get; set;}
-
         public DbSet<Quiz> Quizzes {get; set;}
         public DbSet<Player> Players {get; set;}
         public DbSet<PersonalUser> PersonalUsers {get; set;}
+
     }
 }

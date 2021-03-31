@@ -23,3 +23,7 @@ connection.on("receivemessage", function (message) {
 connection.on("startquiz", function (message) {
     location.reload();
 });
+
+connection.on("playerFinish", function (message) {
+    console.log(message);
+});

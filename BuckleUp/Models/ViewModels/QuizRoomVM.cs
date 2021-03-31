@@ -11,5 +11,6 @@ namespace BuckleUp.Models.ViewModels
         public ICollection<QuizPlayer> Players{get; set;}
         public bool PlayerHasPlayed {get; set;} = false;
         public int PlayerScore {get; set;}
+        public ICollection<QuizPlayer> FinishedPlayers{get; set;}
     }
 }

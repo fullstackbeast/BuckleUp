@@ -1,12 +1,11 @@
 namespace BuckleUp.Models.Entities
 {
-    public class User : BaseEntity
+    public class User : Details
     {        
-        public string Email { get; set; }
-
-        public string Password { get; set; }
         public string Type { get; set; }
-        
-        
+
+        public Teacher Teacher {get; set;}
+        public Student Student {get; set;}
+ 
     }
 }

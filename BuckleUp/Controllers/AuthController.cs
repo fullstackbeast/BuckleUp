@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
-using BuckleUp.Models;
 using BuckleUp.Models.Entities;
+using BuckleUp.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -14,16 +12,10 @@ namespace BuckleUp.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IAuthRepository _authRepository;
-        private readonly ITeacherService _teacherService;
-        private readonly IStudentService _studentService;
-
-        public AuthController(IAuthRepository authRepository, ITeacherService teacherService, IStudentService studentService)
+        private readonly IUserService _userService;
+        public AuthController(IUserService userService)
         {
-            _studentService = studentService;
-            _teacherService = teacherService;
-
-            _authRepository = authRepository;
+            _userService = userService;
 
         }
 
@@ -33,28 +25,17 @@ namespace BuckleUp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(LoginVM loginVM)
         {
 
-
-            User user = _authRepository.Login(email, password);
+            User user = _userService.Login(loginVM.Email, loginVM.Password);
 
             if (user != null)
             {
-
-                Details loggingInUser;
-
-                switch (user.Type)
-                {
-                    case ("Teacher"): loggingInUser = _teacherService.FindById(user.Id); break;
-                    case ("Student"): loggingInUser = _studentService.FindById(user.Id); break;
-                    default: loggingInUser = null; break;
-                }
-
                 var claims = new List<Claim>{
-                new Claim(ClaimTypes.NameIdentifier , loggingInUser.Id.ToString()),
-                new Claim(ClaimTypes.Role, loggingInUser.Role),
-            };
+                    new Claim(ClaimTypes.NameIdentifier , user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Type),
+                };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
@@ -62,7 +43,7 @@ namespace BuckleUp.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
 
-                ViewBag.Message = $"Logged in as {loggingInUser.FirstName} {loggingInUser.LastName}";
+                ViewBag.Message = $"Logged in as {user.FirstName} {user.LastName}";
 
                 return RedirectToAction(actionName: "Dashboard", controllerName: user.Type);
             }
