@@ -1,0 +1,30 @@
+@using BuckleUp.Models.Entities
+@using BuckleUp.Models.ViewModels
+@model BuckleUp.Models.ViewModels.CreateQuizVM
+
+@{
+    Layout = "_DashboardLayout";
+    ViewBag.SideBar = "_StudentSideBar";
+    Model.Questions = new QuizQuestion[Model.NumberOfQuestions];
+}
+
+<h1>Creating quiz....</h1>
+<div class="col-md-8">
+    <form asp-action="Create">
+        @{
+            QuestionIntakeVM questionIntakeVM = new QuestionIntakeVM
+            {
+                Questions = Model.Questions
+            };
+        }
+
+        <partial name="_QuestionsAndAnswersIntake" model=@questionIntakeVM />
+
+        <div class="form-group" style="display: flex">
+            <input type="submit" name="submitbtn" value="Add New Question" class="btn btn-primary" />
+            <input type="submit" name="submitbtn" value="Remove A Question" class="btn btn-danger" />
+            <input type="submit" name="submitbtn" value="Create" class="btn btn-primary" />
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,83 @@
+@model BuckleUp.Models.ViewModels.QuizRoomVM
+
+@{
+    Layout="_SimpleLayout";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/quizroom.css">
+}
+
+<div class="quizroomcontainer">
+    <div class="container roomcontentcontainer">
+        @if(Model.IsQuizCreator){
+            <partial name ="_CreatorQuizRoom" model=@Model/>
+        }
+        else{
+
+            @if(Model.Quiz.status.Equals("unplayed")){
+                <h3>You're playing as - @Model.PlayerUsername </h3>
+                <br/>
+                <h1>Other Players:</h1>
+                <ol class="quizRoomPlayerList gradient-list">
+                    @foreach (var player in Model.Players)
+                    {
+                        if (!player.Player.Name.Equals(Model.PlayerUsername))
+                        {
+                            <li>@player.Player.Name</li>
+                        }
+                    }
+                </ol>
+
+                <br/><br/>
+
+                <p><i>Waiting for Quiz Creator To start </i></p>
+                <p><i>Please refresh every minute if you dont observe any activity on this page .</i></p>
+            }
+            
+            
+            else if(Model.Quiz.status.Equals("playing")){
+
+                if(Model.PlayerHasPlayed){
+                    <h1>Welcome Back @Model.PlayerUsername</h1>
+                    <h1>You have taken this quiz</h1>
+                    <h1>You scored @Model.PlayerScore</h1>
+                    <br/>
+                    <h1>Other Players that are through</h1>
+                    <ol class="quizRoomFinishedPlayerList gradient-list">
+                    @foreach (var player in Model.FinishedPlayers)
+                    {
+                        if (!player.Player.Name.Equals(Model.PlayerUsername))
+                        {
+                            <li>@player.Player.Name</li>
+                        }
+                    }
+                    </ol>
+                }
+
+
+                else{
+                    @section scriptss{
+                        <script>
+                            (()=> {
+                                let gamelink = location.pathname.split("/")[3];
+                                let newLocation = `${location.origin}\\quiz\\play\\${gamelink}`;
+                                location.href = newLocation;
+                                //console.log(newLocation);
+                            })();
+                        </script>
+                    }
+                }  
+            }
+            else if(Model.Quiz.status.Equals("played")){
+                <h1>They have play this one o</h1>
+            }
+            
+        }
+
+    </div>
+</div>
+@section Scripts{
+     <script src="~/js/signalr/dist/browser/signalr.js"></script>
+      <script src="~/js/quizhubhandler.js" asp-append-version="true"></script>
+}

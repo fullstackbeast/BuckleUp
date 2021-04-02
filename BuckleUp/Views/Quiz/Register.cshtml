@@ -1,0 +1,43 @@
+@model BuckleUp.Models.ViewModels.RegisterQuizVM
+
+<h1>Quiz By @Model.CreatorName</h1>
+
+<h4 class="text-danger"> @ViewBag.Message </h4>
+
+<form method="POST">
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("Student")))
+    {
+       
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" asp-for="UseLoggedInUserName" checked>
+            <label class="form-check-label" asp-for="UseLoggedInUserName">Use Your Name As UserName? </label>
+        </div>
+        <div class="form-group d-none signedInUserName">
+            <label asp-for="PlayerUsername" class="control-label">Enter Username</label>
+            <input asp-for="PlayerUsername" class="form-control" />
+            <span asp-validation-for="PlayerUsername" class="text-danger"></span>
+        </div>
+    }
+
+    else
+    {
+        <div class="form-group">
+            <label asp-for="PlayerUsername" class="control-label">Enter Username</label>
+            <input asp-for="PlayerUsername" class="form-control" />
+            <span asp-validation-for="PlayerUsername" class="text-danger"></span>
+        </div>
+    }
+
+    <input type="submit" name="submitbtn" value="Start" class="btn btn-primary" />
+</form>
+
+
+<script type="text/javascript">
+
+    const chkBxUseLoggedInUserName = document.querySelector("#UseLoggedInUserName");
+    const divSignedInUsernameInput = document.querySelector(".signedInUserName");
+
+    chkBxUseLoggedInUserName.addEventListener("change",  e=>{
+        e.target.checked ? divSignedInUsernameInput.classList.add("d-none") :divSignedInUsernameInput.classList.remove("d-none");
+    })
+</script>

@@ -1,0 +1,25 @@
+@{
+    Layout = "_SimpleLayout";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/css/quizindex.css">
+}
+
+<div class="quizIndexContainer">
+    <div class="container quizformcontainer">
+        <h2 class="text-danger">@ViewBag.ErroMessage</h2>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="id" class="control-label">Enter Quiz Code</label>
+                <input type="text" id="id" name="id" class="form-control quizcodeinput" />
+            </div>
+
+            <input type="submit" value="Go" class="btn btn-primary" />
+        </form>
+
+
+        <button class="btn btn-primary">Sign Up To Create A Quiz</button>
+    </div>
+</div>
+ 

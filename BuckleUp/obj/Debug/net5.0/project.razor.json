@@ -15603,6 +15603,21 @@
   "RootNamespace": "BuckleUp",
   "Documents": [
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Play.cshtml",
+      "TargetPath": "Views\\Quiz\\Play.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\Create.cshtml",
+      "TargetPath": "Views\\Assessment\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Room.cshtml",
+      "TargetPath": "Views\\Quiz\\Room.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
@@ -15610,6 +15625,36 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Create.cshtml",
+      "TargetPath": "Views\\Quiz\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_StudentSideBar.cshtml",
+      "TargetPath": "Views\\Shared\\_StudentSideBar.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_DashboardLayout.cshtml",
+      "TargetPath": "Views\\Shared\\_DashboardLayout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\AddStudent.cshtml",
+      "TargetPath": "Views\\Teacher\\AddStudent.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Quizzes.cshtml",
+      "TargetPath": "Views\\Student\\Quizzes.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_TeacherSideBar.cshtml",
+      "TargetPath": "Views\\Shared\\_TeacherSideBar.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15633,8 +15678,53 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\Result.cshtml",
+      "TargetPath": "Views\\Assessment\\Result.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\Students.cshtml",
+      "TargetPath": "Views\\Teacher\\Students.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\Dashboard.cshtml",
       "TargetPath": "Views\\Teacher\\Dashboard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_SimpleLayout.cshtml",
+      "TargetPath": "Views\\Shared\\_SimpleLayout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_PlayerList.cshtml",
+      "TargetPath": "Views\\Shared\\_PlayerList.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_QuestionAndAnswerTaking.cshtml",
+      "TargetPath": "Views\\Shared\\_QuestionAndAnswerTaking.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\TakeAssessment.cshtml",
+      "TargetPath": "Views\\Assessment\\TakeAssessment.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_QuestionsAndAnswersIntake.cshtml",
+      "TargetPath": "Views\\Shared\\_QuestionsAndAnswersIntake.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Index.cshtml",
+      "TargetPath": "Views\\Quiz\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Quiz\\Register.cshtml",
+      "TargetPath": "Views\\Quiz\\Register.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15645,6 +15735,21 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_DashboardTopBar.cshtml",
+      "TargetPath": "Views\\Shared\\_DashboardTopBar.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_CreatorQuizRoom.cshtml",
+      "TargetPath": "Views\\Shared\\_CreatorQuizRoom.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\AddCourse.cshtml",
+      "TargetPath": "Views\\Teacher\\AddCourse.cshtml",
       "FileKind": "mvc"
     },
     {

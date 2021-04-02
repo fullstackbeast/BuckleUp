@@ -1,3 +1,4 @@
+using System;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models.Entities;
@@ -15,6 +16,16 @@ namespace BuckleUp.Domain.Service
         public User Add(User user)
         {
             return _userRepository.Add(user);
+        }
+
+        public User FindByEmail(string email)
+        {
+            return _userRepository.FindByEmail(email);
+        }
+
+        public User FindById(Guid id)
+        {
+            return _userRepository.FindById(id);
         }
 
         public User Login(string email, string password)

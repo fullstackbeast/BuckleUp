@@ -1,7 +1,3 @@
-// using BuckleUp.Domain.Repository;
-// using BuckleUp.Domain.Service;
-// using BuckleUp.Interface.Repository;
-// using BuckleUp.Interface.Service;
 using BuckleUp.Domain.Repository;
 using BuckleUp.Domain.Service;
 using BuckleUp.Interface.Repository;
@@ -55,19 +51,16 @@ namespace BuckleUp
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IStudentService, StudentService>();
 
-            // services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
             // services.AddScoped<ICourseService, CourseService>();
 
-            // services.AddScoped<IQuestionRepository, QuestionRepository>();
-            // services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IAssessmentRepository, AssessmentRepository>();
+            services.AddScoped<IAssessmentService, AssessmentService>();
 
-            // services.AddScoped<IAssessmentRepository, AssessmentRepository>();
-            // services.AddScoped<IAssessmentService, AssessmentService>();
+            services.AddScoped<IQuizRepository, QuizRepository>();
+            services.AddScoped<IQuizService, QuizService>();
 
-            // services.AddScoped<IQuizRepository, QuizRepository>();
-            // services.AddScoped<IQuizService, QuizService>();
-
-            // services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
 
 
             services.AddScoped<QuizHub>();

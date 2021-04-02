@@ -141,10 +141,6 @@ namespace BuckleUp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varbinary(16)");
 
-                    b.Property<byte[]>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
-
                     b.Property<string>("CreatorRole")
                         .HasColumnType("text");
 
@@ -154,10 +150,16 @@ namespace BuckleUp.Migrations
                     b.Property<bool>("ShowPlayerResult")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<byte[]>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
+
                     b.Property<string>("status")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Quizzes");
                 });
@@ -316,6 +318,9 @@ namespace BuckleUp.Migrations
                     b.Property<byte[]>("StudentId")
                         .HasColumnType("varbinary(16)");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
                     b.HasKey("TeacherId", "StudentId");
 
                     b.HasIndex("StudentId");
@@ -352,6 +357,15 @@ namespace BuckleUp.Migrations
                     b.HasOne("BuckleUp.Models.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.Entities.Quiz", b =>
+                {
+                    b.HasOne("BuckleUp.Models.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,0 +1,45 @@
+@model BuckleUp.Models.ViewModels.QuestionIntakeVM
+
+@for (int i = 0; i < Model.Questions.Length; i++)
+{
+
+    <div class="form-group">
+        <label asp-for="Questions[i].QuestionText" class="control-label">Question @(i+1)</label>
+        <input asp-for="Questions[i].QuestionText" class="form-control" />
+        <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
+    </div>
+    <div style="display: flex; margin-left: 2em; margin-bottom: 5px;">
+        <label style="flex-grow:1; flex-shrink: 0; margin-right: 10px" asp-for="Questions[i].Option1"
+            class="control-label">Option 1</label>
+        <input asp-for="Questions[i].Option1" class="form-control" />
+        <span asp-validation-for="Questions[i].Option1" class="text-danger"></span>
+    </div>
+    <div style="display: flex; margin-left: 2em; margin-bottom: 5px;">
+        <label style="flex-grow:1; flex-shrink: 0; margin-right: 10px" asp-for="Questions[i].Option2"
+            class="control-label">Option 2</label>
+        <input asp-for="Questions[i].Option2" class="form-control" />
+        <span asp-validation-for="Questions[i].Option2" class="text-danger"></span>
+    </div>
+    <div style="display: flex; margin-left: 2em; margin-bottom: 5px;">
+        <label style="flex-grow:1; flex-shrink: 0; margin-right: 10px" asp-for="Questions[i].Option3"
+            class="control-label">Option 3</label>
+        <input asp-for="Questions[i].Option3" class="form-control" />
+        <span asp-validation-for="Questions[i].Option3" class="text-danger"></span>
+    </div>
+    <div style="display: flex; margin-left: 2em; margin-bottom: 5px;">
+        <label style="flex-grow:1; flex-shrink: 0; margin-right: 10px" asp-for="Questions[i].Option4"
+            class="control-label">Option 4</label>
+        <input asp-for="Questions[i].Option4" class="form-control" />
+        <span asp-validation-for="Questions[i].Option4" class="text-danger"></span>
+    </div>
+    <div style="display: flex; margin-left: 2em; margin-bottom: 5px;">
+        <label style="flex-grow:1; flex-shrink: 0; margin-right: 10px" asp-for="Questions[i].CorrectOption"
+            class="control-label">Correct Option</label>
+        <select class="form-control" asp-for="Questions[i].CorrectOption">
+            <option value="Option1">Option 1</option>
+            <option value="Option2">Option 2</option>
+            <option value="Option3">Option 3</option>
+            <option value="Option4">Option 4</option>
+        </select>
+    </div>
+}

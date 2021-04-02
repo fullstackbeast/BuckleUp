@@ -10,6 +10,9 @@ namespace BuckleUp.Models
 
         public Guid StudentId{get; set;}
         public Student Student{get; set;}
+
+
+        public string Status {get; set;} = "active";
         
     }
 }

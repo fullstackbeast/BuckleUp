@@ -1,5 +1,6 @@
-<h1>Student Dashboard</h1>
 
-<a asp-controller="Auth" asp-action="Logout" >
-    <button class=" btn btn-danger ">Logout</button>
-</a>
+@{
+    Layout = "_DashboardLayout";
+     ViewBag.SideBar = "_StudentSideBar";
+}
+<h1>Student Dashboard</h1>

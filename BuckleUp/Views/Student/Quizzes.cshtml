@@ -1,0 +1,34 @@
+@model BuckleUp.Models.ViewModels.MyQuizzesVM
+
+@{
+    Layout = "_DashboardLayout";
+     ViewBag.SideBar = "_StudentSideBar";
+}
+<h1 style="margin-bottom: 1em;">My Quizzes</h1>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Quiz</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var quiz in Model.Quizzes)
+        {
+            <tr>
+                <th scope="row">1</th>
+                <td> Quiz-@quiz.Link </td>
+                <td> @quiz.status </td>
+                <td style="display: flex; justify-content: space-around;">
+                    <a asp-controller="Quiz" asp-action="Room" asp-route-id="@quiz.Link" >
+                        <button class="btn btn-success">Play</button>
+                    </a>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+@model BuckleUp.Models.ViewModels.StudentListVM
+
+@{
+    Layout = "_DashboardLayout";
+}
+
+
+<h4>Students</h4>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Number Of Course</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            TeacherStudent teacherStudent = Model.Teacher.TeacherStudents.FirstOrDefault(tchstd =>
+                tchstd.StudentId.Equals(student.Id));
+
+            <tr>
+                <th scope="row">1</th>
+                <td> @student.FirstName @student.LastName </td>
+                <td>3</td>
+                <td class=" @(teacherStudent.Status.Equals("active") ? "table-success" : "table-danger") ">
+                    @teacherStudent.Status
+                </td>
+                <td style="display: flex; justify-content: space-around;">
+                    @if(teacherStudent.Status.Equals("active")){
+                        <button class="btn btn-danger">Deactivate</button>
+                    }
+                    else{
+                        <button class="btn btn-success">Activate</button>
+                    }
+
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
