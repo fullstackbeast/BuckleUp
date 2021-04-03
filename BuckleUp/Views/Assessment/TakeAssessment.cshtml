@@ -1,23 +1,31 @@
-@using BuckleUp.Models.Entities
 @using BuckleUp.Models.ViewModels
 @model BuckleUp.Models.ViewModels.TakeAssessmentVM
 
-<h4>Taking the assessment</h4>
+@{
+    Layout = "_SimpleLayout";
+}
 
-<div class="row">
-    <div class="col-md-8">
-        <form method="POST" asp-action="TakeAssessment">
-            @{
-                QuestionOptionDisplayVM questionOptionDisplayVM = new  QuestionOptionDisplayVM{
-                    questions = Model.questions,
-                    selectedAnswer = new string[Model.questions.Length] 
-                };
-            }
-            
-            <partial name="_QuestionAndAnswerTaking" model=@questionOptionDisplayVM/>
+@section Styles{
+    <link rel="stylesheet" href="~/css/radiobutton.css" />
+}
+<div class="container">
+    <h4>Taking the assessment</h4>
 
-             <input type="submit" value="Submit" class="btn btn-success" />
+    <div class="row">
+        <div class="col-md-8">
+            <form method="POST" asp-action="TakeAssessment">
+                @{
+                    QuestionOptionDisplayVM questionOptionDisplayVM = new  QuestionOptionDisplayVM{
+                        questions = Model.questions,
+                        selectedAnswer = new string[Model.questions.Length] 
+                    };
+                }
+                
+                <partial name="_QuestionAndAnswerTaking" model=@questionOptionDisplayVM/>
 
-        </form>
+                <input type="submit" value="Submit" class="btn btn-success" />
+
+            </form>
+        </div>
     </div>
 </div>

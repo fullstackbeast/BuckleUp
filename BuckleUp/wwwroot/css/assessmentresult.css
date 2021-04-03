@@ -4,7 +4,7 @@
     padding : 10px 5px;
 }
 .assessmentresultcorrectanswer{
-    background-color: var(--selectedColor);
+    background-color: #76f0a0;
 }
 
 .assessmentresultwronganswer{

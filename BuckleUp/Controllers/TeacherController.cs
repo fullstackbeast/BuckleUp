@@ -117,8 +117,31 @@ namespace BuckleUp.Controllers
             }
         }
 
+          
+        [Authorize(Roles = "Teacher")]
+        public IActionResult Courses()
+        {
+            Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            TeacherCourseListVM teacherCourseListVM = new TeacherCourseListVM();
 
+            Teacher teacher = _teacherService.GetTeacherWithCourses(teacherId);
 
+            teacherCourseListVM.Courses = teacher.Courses.ToList();
+            return View(teacherCourseListVM);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public IActionResult Assessments()
+        {
+            Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            TeacherAssessmentListVM teacherAssessmentListVM = new TeacherAssessmentListVM();
+
+            Teacher teacher = _teacherService.GetTeacherWithAssessmentsById(teacherId);
+
+            teacherAssessmentListVM.Teacher = teacher;
+
+            return View(teacherAssessmentListVM);
+        }
 
     }
 }

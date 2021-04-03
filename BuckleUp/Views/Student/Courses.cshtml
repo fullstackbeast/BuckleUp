@@ -1,0 +1,37 @@
+@model BuckleUp.Models.ViewModels.StudentCourseListVM
+
+@{
+    Layout = "_DashboardLayout";
+    ViewBag.SideBar = "_StudentSideBar";
+    int sourceId = 1;
+}
+
+<h1>My courses</h1>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Courses.Count(); i++)
+        {
+            <tr>
+                <th scope="row">1</th>
+                <td> @Model.Courses[i].Title  </td>
+
+                <td style="display: flex; justify-content: space-around;">
+                    <form method="post" asp-action="Enroll" >
+                        <input asp-for="TeacherId" value="@Model.Courses[i].TeacherId" class="form-control" hidden />
+                        <input asp-for="SourceId" value="@sourceId" class="form-control" hidden />
+                        <input asp-for="CourseId" value="@Model.Courses[i].Id" class="form-control" hidden />
+                        <input type="submit" value="Unenroll" class="btn btn-danger"/>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

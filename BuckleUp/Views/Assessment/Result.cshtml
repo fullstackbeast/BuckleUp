@@ -1,5 +1,13 @@
 @model BuckleUp.Models.ViewModels.AssessmentResultVM
 
+@{
+    Layout ="_SimpleLayout";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/css/assessmentresult.css" />
+}
+
+<div class="container">
 
 
 @if (Context.Request.Cookies["AssessmentId"] != null)
@@ -26,7 +34,7 @@
                 @(Model.Questions[i].CorrectOption.Equals("Option1") ? "assessmentresultcorrectanswer" : "" )
                  @(!(Model.Questions[i].CorrectOption.Equals("Option1")) && (Model.Answers[i].Equals("Option1")) ? "assessmentresultwronganswer" : "" )">
             <span>@Model.Questions[i].Option1</span>
-        </div>
+        </div> 
         <div
             class="assessmentresultoption 
                 @(Model.Questions[i].CorrectOption.Equals("Option2") ? "assessmentresultcorrectanswer" : "" )
@@ -48,3 +56,5 @@
     }
 
 }
+
+</div>

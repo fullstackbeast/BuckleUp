@@ -47,6 +47,7 @@ namespace BuckleUp.Domain.Repository
                 .Include(ass => ass.Questions)
                 .Include(ass => ass.StudentAssessments)
                 .ThenInclude(stdass => stdass.Student)
+                .ThenInclude(std => std.User)
                 .FirstOrDefault(ass => ass.Id == id);
         }
 

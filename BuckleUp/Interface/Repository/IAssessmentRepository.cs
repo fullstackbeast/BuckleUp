@@ -10,6 +10,7 @@ namespace BuckleUp.Interface.Repository
            public Assessment Update(Assessment assessment);
            public Assessment Delete(Assessment assessment);
            public Assessment FindById(Guid id);
+           public List<Assessment> FindAllCourseAssessment(Guid courseId);
            public Assessment FindAssessmentAndQuestionsById(Guid id);
            public Assessment FindAssessmentAndQuestionsWithStudentsById(Guid id);
            

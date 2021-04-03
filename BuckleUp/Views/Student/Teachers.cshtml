@@ -1,0 +1,33 @@
+@model BuckleUp.Models.ViewModels.TeacherListVM
+
+@{
+    Layout = "_DashboardLayout";
+    ViewBag.SideBar = "_StudentSideBar";
+}
+
+
+<h4>Teachers</h4>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teacher in Model.Teachers)
+        {
+
+            <tr>
+                <th scope="row">1</th>
+                <td> @teacher.FirstName @teacher.LastName </td>
+
+                <td style="display: flex; justify-content: space-around;">
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

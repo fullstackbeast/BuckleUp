@@ -110,5 +110,10 @@ namespace BuckleUp.Domain.Service
         {
             return _teacherRepository.FindTeacherWithStudentsAndCoursesById(id);
         }
+
+        public Teacher GetTeacherWithAssessmentsById(Guid id)
+        {
+            return _teacherRepository.FindTeacherWithAssessmentsById(id);
+        }
     }
 }

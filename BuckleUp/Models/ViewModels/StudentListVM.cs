@@ -3,14 +3,14 @@ using BuckleUp.Models.Entities;
 
 namespace BuckleUp.Models.ViewModels
 {
-    public class StudentListVM
+    public class TeacherListVM
     {
-        public StudentListVM()
+        public TeacherListVM()
         {
-            Students = new List<User>();
+            Teachers = new List<User>();
         }
 
-        public Teacher Teacher {get; set;}
-        public List<User> Students {get; set;}
+        public Student Student {get; set;}
+        public List<User> Teachers {get; set;}
     }
 }

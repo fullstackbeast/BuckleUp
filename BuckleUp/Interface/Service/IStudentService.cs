@@ -7,10 +7,12 @@ namespace BuckleUp.Interface.Service
 {
     public interface IStudentService
     {
-         public Student AddNewStudent(Student student);
-         public Student FindById(Guid id);
+        public Student AddNewStudent(Student student);
+        public Student FindById(Guid id);
+        public Student GetEnrolledCourseAssessments(Guid id);
         public Student FindByEmail(String email);
         public Student GetStudentWithTeachers(Guid id);
+        public Student GetStudentWithAssessments(Guid id);
         public Student GetStudentWithTeacherCoursesById(Guid id);
         public Student GetStudentWithTeacherCoursesAndAssessmentsById(Guid id);
         public Student Enroll(Guid id, Guid courseID);

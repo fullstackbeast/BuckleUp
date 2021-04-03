@@ -11,6 +11,8 @@ namespace BuckleUp.Models
         
         public Guid CourseId {get; set;}
         public Course Course {get; set;}
+
+        public bool IsEnrolled {get; set;} = true;
         
     }
 }

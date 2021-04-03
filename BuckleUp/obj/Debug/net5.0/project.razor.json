@@ -15623,6 +15623,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\Courses.cshtml",
+      "TargetPath": "Views\\Teacher\\Courses.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -15673,6 +15678,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Assessment\\Details.cshtml",
+      "TargetPath": "Views\\Assessment\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Auth\\Login.cshtml",
       "TargetPath": "Views\\Auth\\Login.cshtml",
       "FileKind": "mvc"
@@ -15698,6 +15708,21 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Enroll.cshtml",
+      "TargetPath": "Views\\Student\\Enroll.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Teacher\\Assessments.cshtml",
+      "TargetPath": "Views\\Teacher\\Assessments.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Teachers.cshtml",
+      "TargetPath": "Views\\Student\\Teachers.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_PlayerList.cshtml",
       "TargetPath": "Views\\Shared\\_PlayerList.cshtml",
       "FileKind": "mvc"
@@ -15715,6 +15740,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Shared\\_QuestionsAndAnswersIntake.cshtml",
       "TargetPath": "Views\\Shared\\_QuestionsAndAnswersIntake.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Assessments.cshtml",
+      "TargetPath": "Views\\Student\\Assessments.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15755,6 +15785,11 @@
     {
       "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Codelearnershub\\BuckleUp\\BuckleUp\\Views\\Student\\Courses.cshtml",
+      "TargetPath": "Views\\Student\\Courses.cshtml",
       "FileKind": "mvc"
     },
     {

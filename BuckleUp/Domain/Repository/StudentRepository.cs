@@ -22,6 +22,13 @@ namespace BuckleUp.Domain.Repository
             _context.SaveChanges();
             return student;
         }
+        
+        public Student Update(Student student)
+        {
+            _context.Students.Update(student);
+            _context.SaveChanges();
+            return student;
+        }
 
         public List<Student> FindAllStudentOfferingACourse(Guid courseId)
         {
@@ -50,6 +57,24 @@ namespace BuckleUp.Domain.Repository
             return _context.Students.Find(id);
         }
 
+        public Student FindStudentWithCoursesAndAssessmentById(Guid id)
+        {
+             return _context.Students
+            .Include(stud => stud.StudentCourses)
+            .ThenInclude(stdcou => stdcou.Course)
+            .Include(std => std.StudentAssessments)
+            .ThenInclude(stdAss => stdAss.Assessment)
+            .FirstOrDefault(std=> std.UserId == id);
+        }
+
+        public Student FindStudentWithCoursesById(Guid id)
+        {
+            return _context.Students
+            .Include(std => std.StudentCourses)
+            .ThenInclude(stdcou => stdcou.Course)
+            .FirstOrDefault(std => std.UserId.Equals(id));
+        }
+
         public Student FindStudentWithTeacherCoursesById(Guid id)
         {
             return _context.Students
@@ -58,7 +83,24 @@ namespace BuckleUp.Domain.Repository
             .ThenInclude(tch => tch.Courses)
             .Include(stud => stud.StudentCourses)
             .ThenInclude(stdcou => stdcou.Course)
-            .FirstOrDefault(tch=> tch.UserId == id);
+            .FirstOrDefault(std => std.UserId == id);
+        }
+
+
+        public Student FindStudentWithTeachersById(Guid id)
+        {
+            return _context.Students
+            .Include(stud => stud.TeacherStudents)
+            .ThenInclude(tchstd => tchstd.Teacher).FirstOrDefault(tch => tch.UserId == id);
+        }
+
+        public Student FindStudentWithAssessmentsById(Guid id)
+        {
+            return _context.Students
+            .Include(std => std.StudentAssessments)
+            .ThenInclude(stdass => stdass.Assessment)
+            .FirstOrDefault(std => std.UserId.Equals(id));
         }
     }
+
 }

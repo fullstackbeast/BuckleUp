@@ -66,7 +66,7 @@ namespace BuckleUp.Controllers
             foreach (var course in teacher.Courses)
             {
                 courseSelect.Add(new SelectListItem
-                { 
+                {
                     Text = $"{course.Title}",
                     Value = $"{course.Id}",
                     Selected = course.Id.Equals(viewModel.CourseId)
@@ -83,7 +83,7 @@ namespace BuckleUp.Controllers
             }
 
             else if (Request.Form["submitbtn"].Equals("Create"))
-            { 
+            {
 
                 Assessment assessment = new Assessment
                 {
@@ -98,6 +98,7 @@ namespace BuckleUp.Controllers
                 };
 
                 _assessmentService.Add(assessment);
+                _assessmentService.AddAssessmentToStudents(assessment);
 
 
                 return RedirectToAction("Dashboard", "Teacher");
@@ -123,6 +124,137 @@ namespace BuckleUp.Controllers
             return View(viewModel);
         }
 
-       
+        public IActionResult Details(Guid? id)
+        {
+
+            Assessment assessment;
+            AssessmentDetailsVM assessmentDetailsVM = new AssessmentDetailsVM();
+
+            if (User.IsInRole("Student"))
+            {
+                assessment = _assessmentService.GetAssessmentAndQuestionsWithStudentsById(id.Value);
+
+                assessmentDetailsVM.StudentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            }
+            if (User.IsInRole("Teacher"))
+            {
+                assessment = _assessmentService.GetAssessmentAndQuestionsWithStudentsById(id.Value);
+
+                assessmentDetailsVM.TeacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            }
+            else
+            {
+                assessment = _assessmentService.GetAssessmentAndQuestionsById(id.Value);
+            }
+
+            assessmentDetailsVM.Assessment = assessment;
+            return View(assessmentDetailsVM);
+        }
+
+
+        public IActionResult TakeAssessment(Guid? id)
+        {
+
+            Assessment assessment = _assessmentService.GetAssessmentAndQuestionsById(id.Value);
+
+            if(User.Identity.IsAuthenticated && User.IsInRole("Student")){
+                Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                Student student = _studentService.GetStudentWithAssessments(studentId);
+
+                Student studentWithAssessments = _studentService.GetEnrolledCourseAssessments(studentId);
+
+                if(studentWithAssessments.StudentAssessments.FirstOrDefault(stdass => stdass.AssessmentId.Equals(id.Value)) == null)  return RedirectToAction(nameof(Details), new {id = id.Value});
+
+                foreach(var studentAssessment in student.StudentAssessments){
+                    if(studentAssessment.AssessmentId.Equals(id.Value)){
+                        if(studentAssessment.HasTaken){
+                            return RedirectToAction(nameof(Details), new {id = id.Value});
+                        }
+                    }
+                }
+            }
+
+            
+            
+
+            if (assessment == null) return NotFound();
+
+            TakeAssessmentVM takeAssessmentVM = new TakeAssessmentVM
+            {
+                questions = assessment.Questions.ToArray()
+            };
+
+            foreach (var question in takeAssessmentVM.questions)
+            {
+                question.CorrectOption = null;
+            }
+
+            return View(takeAssessmentVM);
+        }
+
+        [HttpPost]
+        public IActionResult TakeAssessment(Guid? id, TakeAssessmentVM takeAssessmentVM)
+        {
+            int correctAnswers = 0;
+
+            Assessment assessment = _assessmentService.GetAssessmentAndQuestionsById(id.Value);
+            Question[] questions = assessment.Questions.ToArray();
+            Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            string answers = string.Empty;
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                Question question = questions[i];
+
+                string optionIndexString = $"selectedAnswer[{i}]";
+
+                string option = Request.Form[optionIndexString];
+
+                if (option != null)
+                {
+                    answers += option;
+                    if (question.CorrectOption.Equals(option)) correctAnswers++;
+                }
+                else
+                {
+                    answers += "null";
+                }
+
+                if (i < questions.Length - 1) answers += "-";
+
+            }
+
+            _studentService.RegisterAssessmentPerformance(studentId, id.Value, correctAnswers, questions.Length);
+
+            HttpContext.Response.Cookies.Append("Score", $"You scored {correctAnswers} / {questions.Length}");
+            HttpContext.Response.Cookies.Append("Answers", answers);
+            HttpContext.Response.Cookies.Append("AssessmentId", assessment.Id.ToString());
+
+            return RedirectToAction(nameof(Result));
+
+        }
+
+        public IActionResult Result()
+        {
+
+            string assessmentIdString = HttpContext.Request.Cookies["AssessmentId"];
+            string answers = HttpContext.Request.Cookies["Answers"];
+
+            Guid assessmentId = Guid.Parse(assessmentIdString);
+
+            Assessment assessment = _assessmentService.GetAssessmentAndQuestionsById(assessmentId);
+
+
+
+            AssessmentResultVM assesmentResultVM = new AssessmentResultVM
+            {
+                Questions = assessment.Questions.ToArray(),
+                Answers = answers.Split("-").ToList()
+            };
+            return View(assesmentResultVM);
+        }
+
+
     }
 }

@@ -67,7 +67,7 @@ namespace BuckleUp.Domain.Service
 
         public Assessment GetAssessmentAndQuestionsWithStudentsById(Guid id)
         {
-            throw new NotImplementedException();
+            return _assessmentRepository.FindAssessmentAndQuestionsWithStudentsById(id);
         }
     }
 }

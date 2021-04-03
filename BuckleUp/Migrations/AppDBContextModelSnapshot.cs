@@ -303,6 +303,9 @@ namespace BuckleUp.Migrations
                     b.Property<byte[]>("CourseId")
                         .HasColumnType("varbinary(16)");
 
+                    b.Property<bool>("IsEnrolled")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("StudentId", "CourseId");
 
                     b.HasIndex("CourseId");

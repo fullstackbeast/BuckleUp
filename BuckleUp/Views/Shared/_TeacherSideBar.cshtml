@@ -19,7 +19,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Courses</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">My Courses</a></li>
+                            <li><i class="fa fa-table"></i><a asp-controller="Teacher" asp-action="Courses" >My Courses</a></li>
                             <li><i class="fa fa-table"></i><a asp-controller="Teacher" asp-action="AddCourse" >New Course</a></li>
                         </ul>
                     </li>
@@ -27,7 +27,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Assessments</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">My Assessments</a></li>
+                            <li><i class="fa fa-table"></i><a asp-controller="Teacher" asp-action="Assessments" >My Assessments</a></li>
                             <li><i class="fa fa-table"></i><a asp-controller="Assessment" asp-action="Create">New Assessment</a></li>
                             <li><i class="fa fa-table"></i><a asp-controller="Assessment" asp-action="Report">Assessment Report</a></li>
                         </ul>

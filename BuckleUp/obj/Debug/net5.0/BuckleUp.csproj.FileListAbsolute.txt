@@ -86,3 +86,10 @@ C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Quizze
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Shared\_CreatorQuizRoom.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Shared\_PlayerList.cshtml.g.cs
 C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Shared\_QuestionAndAnswerTaking.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Teachers.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Enroll.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Courses.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\Courses.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Teacher\Assessments.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Student\Assessments.cshtml.g.cs
+C:\Codelearnershub\BuckleUp\BuckleUp\obj\Debug\net5.0\Razor\Views\Assessment\Details.cshtml.g.cs

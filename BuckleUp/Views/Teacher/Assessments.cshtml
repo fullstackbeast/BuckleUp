@@ -1,0 +1,40 @@
+@model BuckleUp.Models.ViewModels.TeacherAssessmentListVM
+
+@{
+    Layout = "_DashboardLayout";
+    ViewBag.SideBar = "_TeacherSideBar";
+    int index = 0;
+}
+
+<h1>My Assessments</h1>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+            <th scope="col">Course</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assessment in Model.Teacher.Assessments)
+        {
+            <tr>
+                <th scope="row">1</th>
+                <td>
+                    <a asp-controller="Assessment" asp-action="Details" asp-route-id="@assessment.Id">
+                        @assessment.Title
+                    </a>
+                </td>
+                <td> @assessment.Type </td>
+                <td> @assessment.Type </td>
+                <td style="display: flex; justify-content: space-around;">
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            index++;
+        }
+    </tbody>
+</table>
