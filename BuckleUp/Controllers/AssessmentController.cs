@@ -18,17 +18,16 @@ namespace BuckleUp.Controllers
         private readonly IAssessmentService _assessmentService;
         private readonly IStudentService _studentService;
 
-        public AssessmentController(ITeacherService teacherService, IAssessmentService assessmentService, IStudentService studentService)
+        public AssessmentController(ITeacherService teacherService, IAssessmentService assessmentService,
+            IStudentService studentService)
         {
             _studentService = studentService;
             _assessmentService = assessmentService;
             _teacherService = teacherService;
-
         }
 
         public IActionResult Create()
         {
-
             Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             Teacher teacher = _teacherService.GetTeacherWithCourses(teacherId);
@@ -56,7 +55,6 @@ namespace BuckleUp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Create(CreateAssessmentVM viewModel)
         {
-
             Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             Teacher teacher = _teacherService.GetTeacherWithCourses(teacherId);
@@ -84,7 +82,6 @@ namespace BuckleUp.Controllers
 
             else if (Request.Form["submitbtn"].Equals("Create"))
             {
-
                 Assessment assessment = new Assessment
                 {
                     Id = Guid.NewGuid(),
@@ -98,15 +95,14 @@ namespace BuckleUp.Controllers
                 };
 
                 _assessmentService.Add(assessment);
-                _assessmentService.AddAssessmentToStudents(assessment);
-
-
+                
+                //_assessmentService.AddAssessmentToStudents(assessment);
+                
                 return RedirectToAction("Dashboard", "Teacher");
             }
 
             else if (Request.Form["submitbtn"].Equals("Remove A Question"))
             {
-
                 AssessmentQuestion[] newQuestions = new AssessmentQuestion[viewModel.Questions.Length - 1];
 
                 for (int q = 0; q < viewModel.Questions.Length - 1; q++)
@@ -126,7 +122,6 @@ namespace BuckleUp.Controllers
 
         public IActionResult Details(Guid? id)
         {
-
             Assessment assessment;
             AssessmentDetailsVM assessmentDetailsVM = new AssessmentDetailsVM();
 
@@ -134,13 +129,20 @@ namespace BuckleUp.Controllers
             {
                 assessment = _assessmentService.GetAssessmentAndQuestionsWithStudentsById(id.Value);
 
-                assessmentDetailsVM.StudentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                assessmentDetailsVM.StudentId =
+                    Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             }
+
             if (User.IsInRole("Teacher"))
             {
+                var teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
                 assessment = _assessmentService.GetAssessmentAndQuestionsWithStudentsById(id.Value);
 
-                assessmentDetailsVM.TeacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                var teacher = _teacherService.GetTeacherWithGroups(teacherId);
+
+                assessmentDetailsVM.Groups = teacher.Groups.ToList();
+                assessmentDetailsVM.TeacherId = teacherId;
             }
             else
             {
@@ -154,28 +156,31 @@ namespace BuckleUp.Controllers
 
         public IActionResult TakeAssessment(Guid? id)
         {
-
             Assessment assessment = _assessmentService.GetAssessmentAndQuestionsById(id.Value);
 
-            if(User.Identity.IsAuthenticated && User.IsInRole("Student")){
+            if (User.Identity.IsAuthenticated && User.IsInRole("Student"))
+            {
                 Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
                 Student student = _studentService.GetStudentWithAssessments(studentId);
 
                 Student studentWithAssessments = _studentService.GetEnrolledCourseAssessments(studentId);
 
-                if(studentWithAssessments.StudentAssessments.FirstOrDefault(stdass => stdass.AssessmentId.Equals(id.Value)) == null)  return RedirectToAction(nameof(Details), new {id = id.Value});
+                if (studentWithAssessments.StudentAssessments.FirstOrDefault(stdass =>
+                        stdass.AssessmentId.Equals(id.Value)) ==
+                    null) return RedirectToAction(nameof(Details), new {id = id.Value});
 
-                foreach(var studentAssessment in student.StudentAssessments){
-                    if(studentAssessment.AssessmentId.Equals(id.Value)){
-                        if(studentAssessment.HasTaken){
+                foreach (var studentAssessment in student.StudentAssessments)
+                {
+                    if (studentAssessment.AssessmentId.Equals(id.Value))
+                    {
+                        if (studentAssessment.HasTaken)
+                        {
                             return RedirectToAction(nameof(Details), new {id = id.Value});
                         }
                     }
                 }
             }
 
-            
-            
 
             if (assessment == null) return NotFound();
 
@@ -222,7 +227,6 @@ namespace BuckleUp.Controllers
                 }
 
                 if (i < questions.Length - 1) answers += "-";
-
             }
 
             _studentService.RegisterAssessmentPerformance(studentId, id.Value, correctAnswers, questions.Length);
@@ -232,19 +236,16 @@ namespace BuckleUp.Controllers
             HttpContext.Response.Cookies.Append("AssessmentId", assessment.Id.ToString());
 
             return RedirectToAction(nameof(Result));
-
         }
 
         public IActionResult Result()
         {
-
             string assessmentIdString = HttpContext.Request.Cookies["AssessmentId"];
             string answers = HttpContext.Request.Cookies["Answers"];
 
             Guid assessmentId = Guid.Parse(assessmentIdString);
 
             Assessment assessment = _assessmentService.GetAssessmentAndQuestionsById(assessmentId);
-
 
 
             AssessmentResultVM assesmentResultVM = new AssessmentResultVM
@@ -255,6 +256,15 @@ namespace BuckleUp.Controllers
             return View(assesmentResultVM);
         }
 
+        [HttpPost]
+        public IActionResult AssignAssessment(AssessmentDetailsVM assessmentDetailsVm)
+        {
+            Console.WriteLine(assessmentDetailsVm.AssessmentId);
+            Console.WriteLine(assessmentDetailsVm.GroupId);
 
+            _assessmentService.AssignToGroup(assessmentDetailsVm.AssessmentId, assessmentDetailsVm.GroupId);
+
+            return RedirectToAction(nameof(Details), new {id = assessmentDetailsVm.AssessmentId});
+        }
     }
 }

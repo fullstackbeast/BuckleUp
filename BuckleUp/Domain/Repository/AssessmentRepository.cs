@@ -32,7 +32,10 @@ namespace BuckleUp.Domain.Repository
 
         public List<Assessment> FindAllCourseAssessment(Guid courseId)
         {
-            return _context.Assessments.Where(ass => ass.CourseId == courseId).ToList();
+            return _context.Assessments
+                .Include(ass => ass.GroupAssessments)
+                .ThenInclude(grpass => grpass.Group)
+                .Where(ass => ass.CourseId == courseId).ToList();
         }
         public Assessment FindAssessmentAndQuestionsById(Guid id)
         {
@@ -48,7 +51,19 @@ namespace BuckleUp.Domain.Repository
                 .Include(ass => ass.StudentAssessments)
                 .ThenInclude(stdass => stdass.Student)
                 .ThenInclude(std => std.User)
+                .Include(a => a.GroupAssessments)
+                .ThenInclude(ga => ga.Group)
                 .FirstOrDefault(ass => ass.Id == id);
+        }
+
+        public Assessment FindAssessmentAndGroupsWithStudentsById(Guid id)
+        {
+            return _context.Assessments.Include(a => a.GroupAssessments)
+                .ThenInclude(ga => ga.Group)
+                .ThenInclude(g => g.StudentGroups)
+                .ThenInclude(sg => sg.Student)
+                .ThenInclude(s => s.User)
+                .FirstOrDefault(a => a.Id.Equals(id));
         }
 
         public Assessment FindById(Guid id)

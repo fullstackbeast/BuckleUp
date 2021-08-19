@@ -96,18 +96,51 @@ namespace BuckleUp.Models
             .WithMany(ply => ply.QuizPlayers)
             .HasForeignKey(Qp => Qp.PlayerId);
             
+            // Configuring Many to many relationship between Group and Student
+            modelBuilder.Entity<StudentGroup>()
+                .HasKey(sp => new {sp.GroupId, sp.StudentId});
+            
+            modelBuilder.Entity<StudentGroup>()
+                .HasOne(sg => sg.Student)
+                .WithMany(st => st.StudentGroups)
+                .HasForeignKey(sg => sg.StudentId);
+
+            modelBuilder.Entity<StudentGroup>()
+                .HasOne(sg => sg.Group)
+                .WithMany(gr => gr.StudentGroups)
+                .HasForeignKey(sg => sg.GroupId);
+            
+            // Configuring Many to many relationship between Group and Assessment
+            modelBuilder.Entity<GroupAssessment>()
+                .HasKey(ga => new {ga.GroupId, ga.AssessmentId});
+            
+            modelBuilder.Entity<GroupAssessment>()
+                .HasOne(ga => ga.Group)
+                .WithMany(g => g.GroupAssessments)
+                .HasForeignKey(ga => ga.GroupId);
+
+            modelBuilder.Entity<GroupAssessment>()
+                .HasOne(ga => ga.Assessment)
+                .WithMany(a => a.GroupAssessments)
+                .HasForeignKey(ga => ga.AssessmentId);
+            
         }
 
 
         public DbSet<User> Users {get; set;}
         public DbSet<Teacher> Teachers {get; set;}
         public DbSet<Student> Students {get; set;}
+        
+        public DbSet<Group> Groups {get; set;}
         public DbSet<Course> Courses {get; set;}
         public DbSet<Assessment> Assessments {get; set;}
+        
         public DbSet<AssessmentQuestion> AssessmentQuestions {get; set;}
+        
         public DbSet<QuizQuestion> QuizQuestions {get; set;}
         public DbSet<Quiz> Quizzes {get; set;}
         public DbSet<Player> Players {get; set;}
+        
         public DbSet<PersonalUser> PersonalUsers {get; set;}
 
     }

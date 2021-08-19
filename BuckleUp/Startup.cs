@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace BuckleUp
@@ -26,7 +27,12 @@ namespace BuckleUp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation(
+                options => options.FileProviders.Add(new PhysicalFileProvider("/")));
+            
+            
+            
             services.AddDbContext<AppDBContext>(options => options.UseMySQL(
               Configuration.GetConnectionString("AppDBContextConnection")
           ));
@@ -59,6 +65,10 @@ namespace BuckleUp
 
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IQuizService, QuizService>();
+            
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IGroupService, GroupService>();
+
 
             services.AddScoped<IPlayerRepository, PlayerRepository>();
 

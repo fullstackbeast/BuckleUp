@@ -1,0 +1,37 @@
+﻿@model BuckleUp.Models.ViewModels.TeacherGroupListVM
+
+@{
+    Layout = "_DashboardLayout";
+    ViewBag.SideBar = "_TeacherSideBar";
+}
+
+
+<h1>My Groups </h1>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @for (int i = 0; i < Model.Groups.Count(); i++)
+    {
+        <tr>
+            <th scope="row">@(i + 1)</th>
+            <td>
+                <a asp-controller="Group" asp-action="Details" asp-route-id=@Model.Groups[i].Id>
+                    @Model.Groups[i].Name
+                </a>
+            </td>
+
+            <td style="display: flex; justify-content: space-around;">
+                <button class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

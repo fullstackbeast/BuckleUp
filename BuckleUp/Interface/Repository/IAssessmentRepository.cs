@@ -14,5 +14,7 @@ namespace BuckleUp.Interface.Repository
            public Assessment FindAssessmentAndQuestionsById(Guid id);
            public Assessment FindAssessmentAndQuestionsWithStudentsById(Guid id);
            
+           public Assessment FindAssessmentAndGroupsWithStudentsById(Guid id);
+           
     }
 }

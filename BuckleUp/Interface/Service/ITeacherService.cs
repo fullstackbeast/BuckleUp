@@ -13,6 +13,8 @@ namespace BuckleUp.Interface.Service
         public Teacher AddAssessment(Guid teacherId, Assessment assessment);
         public Teacher DeleteCourse(Guid courseId, Guid teacherId);
         public Teacher GetTeacherWithStudents(Guid id);
+        public Teacher GetTeacherWithGroups(Guid id);
+        
         public Teacher GetTeacherWithCourses(Guid id);
         public Teacher GetTeacherWithAssessmentsById(Guid id);
         public Teacher GetTeacherWithStudentsAndCourses(Guid id);

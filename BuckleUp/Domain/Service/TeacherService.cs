@@ -11,12 +11,10 @@ namespace BuckleUp.Domain.Service
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ICourseRepository _courseRepository;
-        private readonly IAssessmentService _assessmentService;
         private readonly IStudentService _studentService;
-        public TeacherService(ITeacherRepository teacherRepository, IStudentService studentService, ICourseRepository courseRepository, IAssessmentService assessmentService)
+        public TeacherService(ITeacherRepository teacherRepository, IStudentService studentService, ICourseRepository courseRepository)
         {
             _studentService = studentService;
-            _assessmentService = assessmentService;
             _courseRepository = courseRepository;
             _teacherRepository = teacherRepository;
         }
@@ -98,7 +96,12 @@ namespace BuckleUp.Domain.Service
 
         public Teacher GetTeacherWithStudents(Guid id)
         {
-            throw new NotImplementedException();
+            return _teacherRepository.FindTeacherWithStudentsById(id);
+        }
+
+        public Teacher GetTeacherWithGroups(Guid id)
+        {
+            return _teacherRepository.FindTeacherWithGroupsById(id);
         }
 
         public Teacher GetTeacherWithCourses(Guid id)

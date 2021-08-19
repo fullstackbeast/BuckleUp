@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BuckleUp.Interface.Repository;
 using BuckleUp.Interface.Service;
 using BuckleUp.Models;
 using BuckleUp.Models.Entities;
+using BuckleUp.Models.ViewModels;
 
 namespace BuckleUp.Domain.Service
 {
@@ -11,12 +13,14 @@ namespace BuckleUp.Domain.Service
     {
         private readonly IAssessmentRepository _assessmentRepository;
         private readonly IStudentService _studentService;
-        public AssessmentService(IAssessmentRepository assessmentRepository, IStudentService studentService)
+        private readonly IGroupService _groupService;
+
+        public AssessmentService(IAssessmentRepository assessmentRepository, IStudentService studentService, IGroupService groupService)
         {
             _studentService = studentService;
+            _groupService = groupService;
             _assessmentRepository = assessmentRepository;
         }
-
 
 
         public Assessment GetAssessmentAndQuestionsById(Guid id)
@@ -46,6 +50,47 @@ namespace BuckleUp.Domain.Service
             _assessmentRepository.Update(assessment);
 
             return assessment;
+        }
+
+        public Assessment AssignToGroup(Guid assessmentId, Guid groupId)
+        {
+            var assessment = _assessmentRepository.FindAssessmentAndGroupsWithStudentsById(assessmentId);
+            var group = _groupService.GetGroupWithStudentsAndAssessmentsById(groupId);
+            
+            
+            if (assessment == null)
+            {
+                return null;
+            }
+
+            if (
+                assessment.GroupAssessments
+                    .FirstOrDefault(ga =>
+                        ga.AssessmentId.Equals(assessmentId)
+                        && ga.GroupId.Equals(groupId)) == null)
+            {
+                assessment.GroupAssessments.Add(new GroupAssessment
+                {
+                    AssessmentId = assessmentId,
+                    GroupId = groupId
+                });
+
+                foreach (var studentGroup in group.StudentGroups)
+                {
+                    studentGroup.Student.StudentAssessments.Add(new StudentAssessment
+                    {
+                        StudentId = studentGroup.Student.UserId,
+                        AssessmentId = assessmentId,
+                        HasTaken = false
+                    });
+                
+                    //_studentService.UpdateStudent(studentGroup.Student);
+                }
+                
+                _groupService.UpdateGroup(group);
+            }
+            
+            return _assessmentRepository.Update(assessment);
         }
 
         public Assessment Add(Assessment assessment)
