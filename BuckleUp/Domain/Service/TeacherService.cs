@@ -11,11 +11,13 @@ namespace BuckleUp.Domain.Service
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly ICourseRepository _courseRepository;
+        private readonly IAssessmentService _assessmentService;
         private readonly IStudentService _studentService;
-        public TeacherService(ITeacherRepository teacherRepository, IStudentService studentService, ICourseRepository courseRepository)
+        public TeacherService(ITeacherRepository teacherRepository, IStudentService studentService, ICourseRepository courseRepository, IAssessmentService assessmentService)
         {
             _studentService = studentService;
             _courseRepository = courseRepository;
+            _assessmentService = assessmentService;
             _teacherRepository = teacherRepository;
         }
 
@@ -85,13 +87,22 @@ namespace BuckleUp.Domain.Service
 
         public Teacher AddAssessment(Guid teacherId, Assessment assessment)
         {
+            
             throw new NotImplementedException();
 
         }
 
-        public Teacher DeleteCourse(Guid courseId, Guid teacherId)
+        public void DeleteCourse(Guid courseId, Guid teacherId)
         {
-            throw new NotImplementedException();
+            Course course = _courseRepository.FindWithAssessmentsById(courseId);
+            
+            foreach (var assessment in course.Assessments.ToList())
+            {
+                _assessmentService.DeleteAssessment(assessment.Id);
+            }
+            
+            _courseRepository.Delete(courseId);
+            // throw new NotImplementedException();
         }
 
         public Teacher GetTeacherWithStudents(Guid id)

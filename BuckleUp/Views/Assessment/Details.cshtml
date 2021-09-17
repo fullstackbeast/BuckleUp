@@ -80,7 +80,11 @@
                             <td>@(Model.Assessment.GroupAssessments.IndexOf(assessmentGroups) + 1)</td>
                             <td>@assessmentGroups.Group.Name</td>
                             <td style="display: flex; justify-content: space-around;">
-                                <button class="btn btn-danger">Remove</button>
+                                <a asp-action="UnassignAssessment" 
+                                   asp-route-id=@assessmentGroups.AssessmentId asp-route-groupId=@assessmentGroups.GroupId>
+                                    <button class="btn btn-danger">Remove</button>
+                                </a>
+                                
                             </td>
                         </tr>
                     }

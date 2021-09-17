@@ -256,6 +256,12 @@ namespace BuckleUp.Controllers
             return View(assesmentResultVM);
         }
 
+        public IActionResult Delete(Guid? id)
+        {
+            if (id != null) _assessmentService.DeleteAssessment(id.Value);
+            return RedirectToAction("Assessments", "Teacher");
+        }
+        
         [HttpPost]
         public IActionResult AssignAssessment(AssessmentDetailsVM assessmentDetailsVm)
         {
@@ -266,5 +272,17 @@ namespace BuckleUp.Controllers
 
             return RedirectToAction(nameof(Details), new {id = assessmentDetailsVm.AssessmentId});
         }
+
+        [HttpGet]
+        public IActionResult UnassignAssessment(string id, string groupId)
+        {
+            Guid assessmentId = Guid.Parse(id);
+            Guid groupIdGuid = Guid.Parse(groupId);
+
+            _assessmentService.UnAssignFromGroup(assessmentId, groupIdGuid);
+            
+            return RedirectToAction(nameof(Details), new {id = assessmentId});
+        }
+        
     }
 }

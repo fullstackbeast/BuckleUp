@@ -160,6 +160,7 @@ namespace BuckleUp.Controllers
         public IActionResult Assessments()
         {
             StudentAssessmentListVM studentAssessmentListVM = new StudentAssessmentListVM();
+            
             Guid studentId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             Student student = _studentService.GetEnrolledCourseAssessments(studentId);

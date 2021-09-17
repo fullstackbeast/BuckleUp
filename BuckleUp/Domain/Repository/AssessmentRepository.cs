@@ -65,6 +65,16 @@ namespace BuckleUp.Domain.Repository
                 .ThenInclude(s => s.User)
                 .FirstOrDefault(a => a.Id.Equals(id));
         }
+        
+        public Assessment FindAssessmentAndStudentsById(Guid id)
+        {
+            return _context.Assessments.Include(a => a.GroupAssessments)
+                .ThenInclude(ga => ga.Group)
+                .ThenInclude(g => g.StudentGroups)
+                .ThenInclude(sg => sg.Student)
+                .ThenInclude(s => s.StudentAssessments)
+                .FirstOrDefault(a => a.Id.Equals(id));
+        }
 
         public Assessment FindById(Guid id)
         {

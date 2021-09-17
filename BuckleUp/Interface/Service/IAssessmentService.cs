@@ -15,6 +15,10 @@ namespace BuckleUp.Interface.Service
         public Assessment GetAssessmentAndQuestionsWithStudentsById(Guid id);
         public Assessment AddAssessmentToStudents(Assessment assessment);
 
+        public void DeleteAssessment(Guid id);
+
         public Assessment AssignToGroup(Guid assessmentId, Guid groupId);
+
+        public Assessment UnAssignFromGroup(Guid assessmentId, Guid groupId);
     }
 }

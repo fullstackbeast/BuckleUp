@@ -13,9 +13,10 @@ namespace BuckleUp.Domain.Service
     {
         private readonly IAssessmentRepository _assessmentRepository;
         private readonly IStudentService _studentService;
-        private readonly IGroupService _groupService;
+        private readonly IGroupRepository _groupService;
 
-        public AssessmentService(IAssessmentRepository assessmentRepository, IStudentService studentService, IGroupService groupService)
+        public AssessmentService(IAssessmentRepository assessmentRepository, IStudentService studentService,
+            IGroupRepository groupService)
         {
             _studentService = studentService;
             _groupService = groupService;
@@ -52,12 +53,30 @@ namespace BuckleUp.Domain.Service
             return assessment;
         }
 
+        public void DeleteAssessment(Guid id)
+        {
+            var assessment = _assessmentRepository.FindAssessmentAndGroupsWithStudentsById(id);
+            
+            foreach (var assessmentGroup in assessment.GroupAssessments.ToList().Where(assessmentGroup => assessmentGroup.AssessmentId.Equals(id)))
+            {
+                assessment.GroupAssessments.Remove(assessmentGroup);
+            }
+
+            foreach (var studentAssessment in assessment.StudentAssessments.ToList().Where(studentAssessment => studentAssessment.AssessmentId.Equals(id)))
+            {
+                assessment.StudentAssessments.Remove(studentAssessment);
+            }
+
+            _assessmentRepository.Update(assessment);
+            _assessmentRepository.Delete(assessment);
+        }
+
         public Assessment AssignToGroup(Guid assessmentId, Guid groupId)
         {
-            var assessment = _assessmentRepository.FindAssessmentAndGroupsWithStudentsById(assessmentId);
-            var group = _groupService.GetGroupWithStudentsAndAssessmentsById(groupId);
-            
-            
+            var assessment = _assessmentRepository.FindAssessmentAndStudentsById(assessmentId);
+            var group = _groupService.FindWithStudentsCourseAndAssessmentsBy(groupId);
+
+
             if (assessment == null)
             {
                 return null;
@@ -77,19 +96,72 @@ namespace BuckleUp.Domain.Service
 
                 foreach (var studentGroup in group.StudentGroups)
                 {
-                    studentGroup.Student.StudentAssessments.Add(new StudentAssessment
+                    if (studentGroup.Student.StudentCourses
+                        .FirstOrDefault(sc => sc.CourseId.Equals(assessment.CourseId)
+                                              && sc.StudentId.Equals(studentGroup.Student.UserId)) != null)
                     {
-                        StudentId = studentGroup.Student.UserId,
-                        AssessmentId = assessmentId,
-                        HasTaken = false
-                    });
-                
+                        if (assessment.StudentAssessments.FirstOrDefault(
+                            sa => sa.AssessmentId.Equals(assessmentId)
+                                  && sa.StudentId.Equals(studentGroup.Student.UserId)
+                        ) == null)
+                        {
+                            studentGroup.Student.StudentAssessments.Add(new StudentAssessment
+                            {
+                                StudentId = studentGroup.Student.UserId,
+                                AssessmentId = assessmentId,
+                                HasTaken = false
+                            });
+                        }
+                    }
+
+
                     //_studentService.UpdateStudent(studentGroup.Student);
                 }
-                
+
                 _groupService.UpdateGroup(group);
             }
-            
+
+            return _assessmentRepository.Update(assessment);
+        }
+
+        public Assessment UnAssignFromGroup(Guid assessmentId, Guid groupId)
+        {
+            var assessment = _assessmentRepository.FindAssessmentAndStudentsById(assessmentId);
+            var group = _groupService.FindWithStudentsAndAssessmentsBy(groupId);
+
+
+            if (assessment == null)
+            {
+                return null;
+            }
+
+
+            var studs = new List<Student>();
+
+            foreach (var groupAssessment in assessment.GroupAssessments.ToList())
+            {
+                foreach (var studentGroup in groupAssessment.Group.StudentGroups)
+                {
+                    studs.Add(studentGroup.Student);
+                }
+            }
+
+            foreach (var s in studs)
+            {
+                var studassessment = s.StudentAssessments
+                    .FirstOrDefault(sa => sa.AssessmentId.Equals(assessmentId));
+                s.StudentAssessments.Remove(studassessment);
+            }
+
+
+            foreach (var groupAssessment in assessment.GroupAssessments.ToList())
+            {
+                if (groupAssessment.AssessmentId.Equals(assessmentId) && groupAssessment.GroupId.Equals(groupId))
+                {
+                    assessment.GroupAssessments.Remove(groupAssessment);
+                }
+            }
+
             return _assessmentRepository.Update(assessment);
         }
 

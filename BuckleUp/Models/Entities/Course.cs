@@ -15,6 +15,7 @@ namespace BuckleUp.Models.Entities
         public Guid TeacherId {get; set;}
         public ICollection<StudentCourse> StudentCourses{get; set;}
 
+        public List<Assessment> Assessments { get; set; }
 
 
     }

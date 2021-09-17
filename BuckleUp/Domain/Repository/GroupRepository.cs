@@ -70,5 +70,18 @@ namespace BuckleUp.Domain.Repository
 
             return group;
         }
+        
+        public Group FindWithStudentsCourseAndAssessmentsBy(Guid id)
+        {
+            var group = _context.Groups
+                .Include(g => g.StudentGroups)
+                .ThenInclude(sg => sg.Student)
+                .ThenInclude(s => s.StudentCourses)
+                .Include(g => g.GroupAssessments)
+                .ThenInclude(ga => ga.Assessment)
+                .FirstOrDefault(g => g.Id.Equals(id));
+
+            return group;
+        }
     }
 }

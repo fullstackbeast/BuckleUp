@@ -9,6 +9,10 @@ namespace BuckleUp.Interface.Repository
 
          public Course FindById(Guid id);
 
+         public void Delete(Guid id);
+         
+         public Course FindWithAssessmentsById(Guid id);
+
          public Course Update (Course course);
     }
 }

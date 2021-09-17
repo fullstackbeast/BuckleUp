@@ -12,8 +12,12 @@ namespace BuckleUp.Interface.Service
 
         public Group AddStudent(Guid groupId, Guid studentId);
         
+        public void DeleteGroup(Guid groupId);
+        
         public Group GetGroupWithStudentsAndAssessmentsById(Guid id);
 
         public Group RemoveStudent(Guid groupId, Guid studentId);
+
+        public Group FindWithStudentsCourseAndAssessmentsBy(Guid id);
     }
 }

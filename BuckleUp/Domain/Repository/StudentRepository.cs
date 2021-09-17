@@ -101,6 +101,7 @@ namespace BuckleUp.Domain.Repository
             return _context.Students
             .Include(std => std.StudentAssessments)
             .ThenInclude(stdass => stdass.Assessment)
+            .Include(st => st.StudentCourses)
             .FirstOrDefault(std => std.UserId.Equals(id));
         }
     }

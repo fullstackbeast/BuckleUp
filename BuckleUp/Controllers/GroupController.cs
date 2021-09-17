@@ -82,5 +82,17 @@ namespace BuckleUp.Controllers
             _groupService.RemoveStudent(Guid.Parse(id), Guid.Parse(studentId));
             return RedirectToAction(nameof(Details), new {id = id});
         }
+        
+        [Authorize(Roles = "Teacher")]
+        [HttpGet]
+        public IActionResult Delete(Guid? id)
+        {
+            // _groupService.RemoveStudent(Guid.Parse(id), Guid.Parse(studentId));
+            // return RedirectToAction(nameof(Details), new {id = id});
+
+            if (id != null) _groupService.DeleteGroup(id.Value);
+
+            return RedirectToAction("Groups", "Teacher");
+        }
     }
 }

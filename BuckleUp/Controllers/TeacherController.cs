@@ -134,6 +134,15 @@ namespace BuckleUp.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
+        public IActionResult DeleteCourses(Guid? id)
+        {
+            Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            if (id != null) _teacherService.DeleteCourse(id.Value, teacherId);
+
+            return RedirectToAction(nameof(Courses));
+        }
+        
+        [Authorize(Roles = "Teacher")]
         public IActionResult Assessments()
         {
             Guid teacherId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);

@@ -31,7 +31,10 @@
                 <td> @assessment.Type </td>
                 <td> @assessment.Type </td>
                 <td style="display: flex; justify-content: space-around;">
-                    <button class="btn btn-danger">Delete</button>
+                    <a asp-controller="Assessment" asp-action="Delete" asp-route-id=@assessment.Id>
+                         <button class="btn btn-danger">Delete</button>
+                    </a>
+                   
                 </td>
             </tr>
             index++;

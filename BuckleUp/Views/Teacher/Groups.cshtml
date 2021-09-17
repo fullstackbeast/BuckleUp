@@ -29,7 +29,10 @@
             </td>
 
             <td style="display: flex; justify-content: space-around;">
-                <button class="btn btn-danger">Delete</button>
+                <a asp-controller="Group" asp-action="Delete" asp-route-id=@Model.Groups[i].Id >
+                     <button class="btn btn-danger">Delete</button>
+                </a>
+               
             </td>
         </tr>
     }

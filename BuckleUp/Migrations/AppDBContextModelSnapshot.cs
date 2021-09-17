@@ -107,6 +107,26 @@ namespace BuckleUp.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("BuckleUp.Models.Entities.Group", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("TeacherId")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Groups");
+                });
+
             modelBuilder.Entity("BuckleUp.Models.Entities.PersonalUser", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -271,6 +291,21 @@ namespace BuckleUp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BuckleUp.Models.GroupAssessment", b =>
+                {
+                    b.Property<byte[]>("GroupId")
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<byte[]>("AssessmentId")
+                        .HasColumnType("varbinary(16)");
+
+                    b.HasKey("GroupId", "AssessmentId");
+
+                    b.HasIndex("AssessmentId");
+
+                    b.ToTable("GroupAssessment");
+                });
+
             modelBuilder.Entity("BuckleUp.Models.StudentAssessment", b =>
                 {
                     b.Property<byte[]>("StudentId")
@@ -313,6 +348,21 @@ namespace BuckleUp.Migrations
                     b.ToTable("StudentCourse");
                 });
 
+            modelBuilder.Entity("BuckleUp.Models.StudentGroup", b =>
+                {
+                    b.Property<byte[]>("GroupId")
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<byte[]>("StudentId")
+                        .HasColumnType("varbinary(16)");
+
+                    b.HasKey("GroupId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentGroup");
+                });
+
             modelBuilder.Entity("BuckleUp.Models.TeacherStudent", b =>
                 {
                     b.Property<byte[]>("TeacherId")
@@ -334,7 +384,7 @@ namespace BuckleUp.Migrations
             modelBuilder.Entity("BuckleUp.Models.Entities.Assessment", b =>
                 {
                     b.HasOne("BuckleUp.Models.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Assessments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -359,6 +409,15 @@ namespace BuckleUp.Migrations
                 {
                     b.HasOne("BuckleUp.Models.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.Entities.Group", b =>
+                {
+                    b.HasOne("BuckleUp.Models.Entities.Teacher", "Teacher")
+                        .WithMany("Groups")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -415,6 +474,21 @@ namespace BuckleUp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BuckleUp.Models.GroupAssessment", b =>
+                {
+                    b.HasOne("BuckleUp.Models.Entities.Assessment", "Assessment")
+                        .WithMany("GroupAssessments")
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuckleUp.Models.Entities.Group", "Group")
+                        .WithMany("GroupAssessments")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BuckleUp.Models.StudentAssessment", b =>
                 {
                     b.HasOne("BuckleUp.Models.Entities.Assessment", "Assessment")
@@ -440,6 +514,21 @@ namespace BuckleUp.Migrations
 
                     b.HasOne("BuckleUp.Models.Entities.Student", "Student")
                         .WithMany("StudentCourses")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BuckleUp.Models.StudentGroup", b =>
+                {
+                    b.HasOne("BuckleUp.Models.Entities.Group", "Group")
+                        .WithMany("StudentGroups")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuckleUp.Models.Entities.Student", "Student")
+                        .WithMany("StudentGroups")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

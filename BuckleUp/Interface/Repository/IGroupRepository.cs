@@ -19,6 +19,7 @@ namespace BuckleUp.Interface.Repository
         public Group FindWithStudentsBy(Guid id);
         
         public Group FindWithStudentsAndAssessmentsBy(Guid id);
-        
+
+        public Group FindWithStudentsCourseAndAssessmentsBy(Guid id);
     }
 }
