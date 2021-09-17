@@ -64,6 +64,8 @@ namespace BuckleUp.Domain.Repository
             .ThenInclude(stdcou => stdcou.Course)
             .Include(std => std.StudentAssessments)
             .ThenInclude(stdAss => stdAss.Assessment)
+            .Include(stud => stud.StudentGroups)
+            .ThenInclude(stdgrp => stdgrp.Group)
             .FirstOrDefault(std=> std.UserId == id);
         }
 
@@ -99,6 +101,7 @@ namespace BuckleUp.Domain.Repository
             return _context.Students
             .Include(std => std.StudentAssessments)
             .ThenInclude(stdass => stdass.Assessment)
+            .Include(st => st.StudentCourses)
             .FirstOrDefault(std => std.UserId.Equals(id));
         }
     }

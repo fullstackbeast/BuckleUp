@@ -24,7 +24,10 @@
                 <td> @Model.Courses[i].Title  </td>
 
                 <td style="display: flex; justify-content: space-around;">
-                    <button class="btn btn-danger">Delete</button>
+                    <a asp-action="DeleteCourses" asp-route-id=@Model.Courses[i].Id >
+                        <button class="btn btn-danger">Delete</button>
+                    </a>
+                    
                 </td>
             </tr>
         }

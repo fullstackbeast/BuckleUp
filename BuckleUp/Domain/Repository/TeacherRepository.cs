@@ -42,6 +42,13 @@ namespace BuckleUp.Domain.Repository
             .FirstOrDefault(tch => tch.UserId == id);
         }
 
+        public Teacher FindTeacherWithGroupsById(Guid id)
+        {
+            return _context.Teachers
+                .Include(tch => tch.Groups)
+                .FirstOrDefault(tch => tch.UserId == id);
+        }
+
         public Teacher FindTeacherWithCoursesById(Guid id)
         {
             return _context.Teachers

@@ -7,6 +7,7 @@ using BuckleUp.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuckleUp.Controllers
 {
@@ -27,6 +28,12 @@ namespace BuckleUp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View(loginVM);
+            }
+
 
             User user = _userService.Login(loginVM.Email, loginVM.Password);
 

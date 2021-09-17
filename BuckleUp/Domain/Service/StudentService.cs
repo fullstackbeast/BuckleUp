@@ -29,10 +29,11 @@ namespace BuckleUp.Domain.Service
             Student student = _studentRepository.FindStudentWithCoursesAndAssessmentById(id);
 
             StudentCourse alreadyEnrolledCourse = student.StudentCourses
-                                .FirstOrDefault(stdcou => stdcou.CourseId.Equals(courseId));
-            
-            if(alreadyEnrolledCourse!=null && !alreadyEnrolledCourse.IsEnrolled){
+                .FirstOrDefault(stdcou => stdcou.CourseId.Equals(courseId));
 
+
+            if (alreadyEnrolledCourse != null && !alreadyEnrolledCourse.IsEnrolled)
+            {
                 List<StudentCourse> studentCourses = student.StudentCourses.ToList();
                 studentCourses.Remove(alreadyEnrolledCourse);
 
@@ -41,28 +42,51 @@ namespace BuckleUp.Domain.Service
                 studentCourses.Add(alreadyEnrolledCourse);
 
                 student.StudentCourses = studentCourses;
+            }
+            else
+            {
+                StudentCourse studentCourse = new StudentCourse
+                {
+                    StudentId = id,
+                    CourseId = courseId,
+                    IsEnrolled = true
+                };
 
-                return _studentRepository.Update(student);
+                student.StudentCourses.Add(studentCourse);
             }
 
-            StudentCourse studentCourse = new StudentCourse
-            {
-                StudentId = id,
-                CourseId = courseId,
-                IsEnrolled = true
-            };
-            student.StudentCourses.Add(studentCourse);
 
             List<Assessment> courseAssessments = _assessmentRepository.FindAllCourseAssessment(courseId);
 
+
             foreach (var assessment in courseAssessments)
             {
-                StudentAssessment studentAssessment = new StudentAssessment
+                bool isInGroup = false;
+
+                foreach (var groupAssessment in assessment.GroupAssessments)
                 {
-                    StudentId = id,
-                    AssessmentId = assessment.Id
-                };
-                student.StudentAssessments.Add(studentAssessment);
+                    var isStudentInGroup = student.StudentGroups
+                        .FirstOrDefault(sg =>
+                            sg.GroupId.Equals(groupAssessment.Group.Id) && sg.StudentId.Equals(student.UserId)) != null;
+
+                    if (isStudentInGroup == true)
+                    {
+                        isInGroup = true;
+                        break;
+                    }
+                }
+
+                if (isInGroup && !student.StudentAssessments.Any(std => 
+                    std.AssessmentId.Equals(assessment.Id) ))
+                {
+                    
+                    StudentAssessment studentAssessment = new StudentAssessment
+                    {
+                        StudentId = id,
+                        AssessmentId = assessment.Id
+                    };
+                    student.StudentAssessments.Add(studentAssessment);
+                }
             }
 
             _studentRepository.Update(student);
@@ -72,18 +96,18 @@ namespace BuckleUp.Domain.Service
 
         public Student UnEnroll(Guid id, StudentCourse studentCourse)
         {
-              Student student = _studentRepository.FindStudentWithCoursesById(id);
-              List<StudentCourse> studentCourses = student.StudentCourses.ToList();
+            Student student = _studentRepository.FindStudentWithCoursesById(id);
+            List<StudentCourse> studentCourses = student.StudentCourses.ToList();
 
-              studentCourses.Remove(studentCourse);
+            studentCourses.Remove(studentCourse);
 
-              studentCourse.IsEnrolled = false;
-              
-              studentCourses.Add(studentCourse);
-              
-              student.StudentCourses = studentCourses;
-              
-              return _studentRepository.Update(student);
+            studentCourse.IsEnrolled = false;
+
+            studentCourses.Add(studentCourse);
+
+            student.StudentCourses = studentCourses;
+
+            return _studentRepository.Update(student);
         }
 
         public Student FindByEmail(string email)
@@ -98,7 +122,6 @@ namespace BuckleUp.Domain.Service
 
         public List<Student> GetAllStudentOfferingACourse(Guid courseId)
         {
-
             return _studentRepository.FindAllStudentOfferingACourse(courseId);
         }
 
@@ -122,7 +145,8 @@ namespace BuckleUp.Domain.Service
             throw new NotImplementedException();
         }
 
-        public Student RegisterAssessmentPerformance(Guid id, Guid assessmentId, int score, int numberOfQuestionsWhenTaken)
+        public Student RegisterAssessmentPerformance(Guid id, Guid assessmentId, int score,
+            int numberOfQuestionsWhenTaken)
         {
             Student student = _studentRepository.FindStudentWithCoursesAndAssessmentById(id);
 
@@ -135,9 +159,10 @@ namespace BuckleUp.Domain.Service
 
             return _studentRepository.Update(student);
         }
+
         public Student UpdateStudent(Student student)
         {
-            throw new NotImplementedException();
+            return _studentRepository.Update(student);
         }
 
         public Student GetStudentWithAssessments(Guid id)
@@ -153,9 +178,9 @@ namespace BuckleUp.Domain.Service
             foreach (var stdAss in student.StudentAssessments)
             {
                 StudentCourse studentCourse = student.StudentCourses
-                .FirstOrDefault(stdcou => stdcou.CourseId.Equals(stdAss.Assessment.CourseId));
+                    .FirstOrDefault(stdcou => stdcou.CourseId.Equals(stdAss.Assessment.CourseId));
 
-                if (!studentCourse.IsEnrolled || studentCourse==null) studentAssessments.Remove(stdAss);
+                if (!studentCourse.IsEnrolled || studentCourse == null) studentAssessments.Remove(stdAss);
             }
 
             student.StudentAssessments = studentAssessments;

@@ -9,6 +9,7 @@ namespace BuckleUp.Models.Entities
         {
             StudentAssessments = new List<StudentAssessment>();
             Questions = new List<AssessmentQuestion>();
+            GroupAssessments = new List<GroupAssessment>();
         }
         public string Title { get; set; }
         public string Type { get; set; }
@@ -20,5 +21,7 @@ namespace BuckleUp.Models.Entities
         public Guid TeacherId { get; set; }
         public ICollection<AssessmentQuestion> Questions { get; set; }
         public ICollection<StudentAssessment> StudentAssessments { get; set; }
+        
+        public ICollection<GroupAssessment> GroupAssessments {get; set;}
     }
 }

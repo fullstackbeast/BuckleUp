@@ -28,6 +28,11 @@ namespace BuckleUp.Controllers
         public IActionResult Register(RegisterUserVM registerUserVM)
         {
 
+            if (!ModelState.IsValid)
+            {
+                return View(registerUserVM);
+            }
+            
             User user = new User{
                 Id = Guid.NewGuid(),
                 FirstName = registerUserVM.FirstName,
